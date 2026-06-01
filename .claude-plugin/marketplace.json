@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace-manifest.json",
+  "name": "dhis2-chap",
+  "description": "Internal Claude Code plugins for the DHIS2 CHAP modeling platform.",
+  "owner": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "hello-world",
+      "source": "./plugins/hello-world",
+      "description": "Example plugin — a starting template with one slash command and one skill.",
+      "version": "0.1.0",
+      "author": {
+        "name": "DHIS2 CHAP"
+      }
+    }
+  ]
+}
