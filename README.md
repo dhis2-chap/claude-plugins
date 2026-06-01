@@ -1,94 +1,134 @@
 # DHIS2 CHAP — Claude Code plugins
 
 Internal [Claude Code](https://code.claude.com) plugin marketplace for people
-working on the DHIS2 CHAP modeling platform. Add it once, then install the
-plugins you want.
+working on the DHIS2 CHAP modeling platform.
 
-## Use the marketplace
+A "marketplace" is just this GitHub repo. You add it to Claude Code once, then
+install any plugins you want from it. Plugins can add slash commands, skills,
+subagents, hooks, and MCP servers to your Claude Code.
 
-In Claude Code, add this repo as a marketplace (one time):
+---
+
+## Prerequisites
+
+- [Claude Code](https://code.claude.com) installed and signed in.
+- Access to GitHub (this repo is public, so no extra setup is needed).
+
+---
+
+## 1. Add the marketplace (once)
+
+Run this inside Claude Code:
 
 ```
 /plugin marketplace add dhis2-chap/claude-plugins
 ```
 
-Then browse and install plugins:
+Claude Code fetches the repo and registers it under the name **`dhis2-chap`**.
+You only need to do this once per machine.
+
+---
+
+## 2. Find and install a plugin
+
+Browse everything available, then install what you want:
+
+```
+/plugin
+```
+
+This opens the plugin manager UI where you can see the marketplace's plugins and
+install them interactively.
+
+Or install directly by name, using the `<plugin>@dhis2-chap` form:
 
 ```
 /plugin install hello-world@dhis2-chap
 ```
 
-Useful management commands:
+After installing, the plugin's commands and skills are available immediately.
+For example, the `hello-world` plugin adds a `/hello` command — try it to
+confirm everything works.
+
+### Install scope (optional)
+
+By default a plugin is installed for you only (user scope). You can also share
+an install through a repo's checked-in settings:
 
 ```
-/plugin list                              # what's installed
-/plugin marketplace update dhis2-chap     # pull the latest plugin list
-/plugin disable <plugin>@dhis2-chap       # turn off without uninstalling
-/plugin uninstall <plugin>@dhis2-chap     # remove
+/plugin install <plugin>@dhis2-chap --scope project   # shared via .claude/settings.json
+/plugin install <plugin>@dhis2-chap --scope local      # this repo only, gitignored
 ```
 
-### Auto-suggest the marketplace to a whole repo (optional)
+---
 
-Add this to a project's `.claude/settings.json` so anyone opening that repo in
-Claude Code is prompted to enable the marketplace and listed plugins:
+## 3. Manage installed plugins
+
+```
+/plugin list                                # show installed plugins
+/plugin disable <plugin>@dhis2-chap         # turn off without uninstalling
+/plugin enable  <plugin>@dhis2-chap         # turn back on
+/plugin uninstall <plugin>@dhis2-chap       # remove completely
+```
+
+---
+
+## 4. Get updates
+
+New plugins and new versions land in this repo over time. Refresh your local
+copy of the marketplace to see them:
+
+```
+/plugin marketplace update dhis2-chap
+```
+
+Then install or update plugins as usual. Installed plugins pick up new versions
+when the plugin's `version` is bumped (or, for unversioned plugins, when the
+git commit changes).
+
+---
+
+## Auto-suggest plugins to a whole repo (optional)
+
+If you want everyone who opens a particular CHAP code repo in Claude Code to be
+prompted to enable this marketplace and a set of plugins, add this to that
+repo's `.claude/settings.json` and commit it:
 
 ```json
 {
   "extraKnownMarketplaces": {
     "dhis2-chap": {
       "source": { "source": "github", "repo": "dhis2-chap/claude-plugins" }
-    },
-    "enabledPlugins": {
-      "hello-world@dhis2-chap": true
     }
+  },
+  "enabledPlugins": {
+    "hello-world@dhis2-chap": true
   }
 }
 ```
 
-## Repository layout
+---
 
-```
-.
-├── .claude-plugin/
-│   └── marketplace.json        # marketplace manifest — lists every plugin
-├── plugins/
-│   └── hello-world/            # one directory per plugin
-│       ├── .claude-plugin/
-│       │   └── plugin.json      # plugin manifest
-│       ├── commands/            # slash commands (.md files)
-│       │   └── hello.md
-│       └── skills/              # skills (one folder each, with SKILL.md)
-│           └── chap-greeting/
-│               └── SKILL.md
-└── README.md
-```
+## Available plugins
 
-## Add a new plugin
+| Plugin | Description |
+|--------|-------------|
+| `hello-world` | Example plugin — a `/hello` command and an example skill. Copy it as a template for new plugins. |
 
-1. Copy `plugins/hello-world/` to `plugins/<your-plugin>/`.
-2. Edit `plugins/<your-plugin>/.claude-plugin/plugin.json` — set `name`,
-   `description`, `version`.
-3. Add your own commands, skills, agents, hooks, or MCP servers. A plugin can
-   contain any of:
-   - `commands/` — slash commands (`.md` files with a `description` frontmatter).
-   - `skills/<skill-name>/SKILL.md` — skills (auto-triggered by their `description`).
-   - `agents/` — subagent definitions.
-   - `hooks/hooks.json` — event hooks.
-   - `.mcp.json` — MCP server config.
-4. Register it in `.claude-plugin/marketplace.json` by adding an entry to the
-   `plugins` array (`name` + `source: "./plugins/<your-plugin>"`).
-5. Validate, commit, and open a PR:
+---
 
-   ```
-   /plugin validate .
-   ```
+## Contributing a plugin
 
-6. Once merged, teammates run `/plugin marketplace update dhis2-chap` to see it.
+Want to share a plugin with the team? See **[CONTRIBUTING.md](./CONTRIBUTING.md)**
+for the repo layout and a step-by-step guide.
 
-## Notes
+---
 
-- **Versioning:** bump `version` in the plugin's `plugin.json` on each change so
-  installs pick up updates. (Omit `version` entirely to version by git commit
-  instead.)
-- **Don't** put `commands/`, `skills/`, `agents/`, or `hooks/` inside
-  `.claude-plugin/` — only the manifest (`plugin.json`) goes there.
+## Troubleshooting
+
+- **A new command/skill doesn't show up after installing.** Run
+  `/plugin list` to confirm it's installed and enabled. If you just published a
+  change, run `/plugin marketplace update dhis2-chap` first, then reinstall.
+- **The marketplace name.** Plugins are always referenced as
+  `<plugin>@dhis2-chap`, regardless of the repo name (`claude-plugins`). The
+  `dhis2-chap` part comes from the `name` field in `.claude-plugin/marketplace.json`.
