@@ -114,6 +114,7 @@ repo's `.claude/settings.json` and commit it:
 | Plugin | Description |
 |--------|-------------|
 | `hello-world` | Example plugin — a `/hello` command and an example skill. Copy it as a template for new plugins. |
+| `improve-chap-model` | Iteratively improve an existing CHAP model. Evaluates a model (local folder or GitHub URL) on a dataset with the `chap` CLI, tunes the model code and/or config, and tracks every experiment with git. Run `/improve-chap-model`. |
 
 ---
 

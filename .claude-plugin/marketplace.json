@@ -18,6 +18,15 @@
       "author": {
         "name": "DHIS2 CHAP"
       }
+    },
+    {
+      "name": "improve-chap-model",
+      "source": "./plugins/improve-chap-model",
+      "description": "Iteratively improve an existing CHAP model: evaluate with the chap CLI, tune code/config, and track every experiment with git for reproducibility.",
+      "version": "0.1.0",
+      "author": {
+        "name": "DHIS2 CHAP"
+      }
     }
   ]
 }

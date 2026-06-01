@@ -1,0 +1,15 @@
+{
+  "name": "improve-chap-model",
+  "displayName": "Improve CHAP Model",
+  "version": "0.1.0",
+  "description": "Iteratively improve an existing CHAP model: evaluate it on a dataset with the chap CLI, understand its code, make targeted changes to the code or config, and track every experiment with git so promising results are reproducible.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": ["chap", "model", "evaluation", "iterative"]
+}
