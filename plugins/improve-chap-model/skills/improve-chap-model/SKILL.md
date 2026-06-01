@@ -42,6 +42,19 @@ and from `chap --help` at runtime (step 0).
    there. If **several `chap` installs** are on PATH (e.g. a pyenv shim and a uv
    tool), they may be different versions with different commands; **ask the user
    which `chap` to use** and use that explicit path for every command afterward.
+   - **Ask the user which chap version/source they want.** Features differ by
+     version (e.g. the NetCDF `eval` command needs **chap-core ≥ 2.0.0**, which at
+     time of writing lives on GitHub `master` as a `2.0.0.devN` build — the
+     released `1.1.4` only has `evaluate`/`evaluate2`).
+   - **A project-local install is often cleanest** — it pins the version with the
+     model and avoids clobbering system installs:
+     ```
+     uv venv --python 3.13 .venv
+     uv pip install --python .venv "chap-core @ git+https://github.com/dhis2-chap/chap-core.git"
+     ```
+     Then **use the explicit binary path** (`.venv/bin/chap`) for *every* command
+     this session, and record the resolved version in the experiment log. Add
+     `.venv/` to `.gitignore`.
 2. **Read the live docs** (WebFetch both URLs above). They define the current
    evaluation workflow and the external-model contract.
 3. **Discover the current commands from the installed CLI** — it is the ground
@@ -50,7 +63,9 @@ and from `chap --help` at runtime (step 0).
      file**. Prefer **`eval`**; if absent, fall back to `evaluate2`, then
      `evaluate`. (The command name has changed across versions — do not assume.)
    - `chap <eval-cmd> --help` — read its exact arguments (model, dataset, output,
-     `--backtest-params.*`, `--model-configuration-yaml`, `--track`, etc.).
+     `--backtest-params.*`, `--model-configuration-yaml`, the tracking flag —
+     `--run-config.track` in chap 2.0.0 — `--dry-run`, etc.). Do not assume flag
+     names; copy them from the help output.
    - `chap export-metrics --help` — for computing comparable metrics from `.nc`
      files.
 
@@ -79,24 +94,49 @@ Everything here is chosen **once** and then frozen for the whole session.
   is a first-class lever you will tune (step 5).
 - **Backtest parameters.** Pick `--backtest-params` (`n-periods`, `n-splits`,
   `stride`) per the docs/defaults and keep them constant for every experiment.
-- **MLflow tracking.** Include `--track` on the eval command when the flag exists
-  (check `--help`) so each run is automatically logged to MLflow.
-- **Define the canonical commands once**, for example (adapt to what `--help`
-  shows):
-  - Evaluate: `chap <eval-cmd> <model> <dataset.csv> <out>.nc --model-configuration-yaml <config> --track --backtest-params.n-splits <N> ...`
+- **MLflow tracking (optional, don't let it block you).** Enable the tracking
+  flag (`--run-config.track` in chap 2.0.0) so each run is logged to MLflow. It
+  needs two environment variables, or the run errors out:
+  ```
+  export MLFLOW_TRACKING_URI="file://$PWD/mlruns"   # a local file store works fine
+  export MLFLOW_ALLOW_FILE_STORE=true                # required to allow a file store
+  ```
+  `mlruns/` is large — gitignore it. If MLflow setup gets in the way, **drop the
+  tracking flag and proceed** — the committed git experiment log is the primary,
+  authoritative record; MLflow is a bonus.
+- **Define the canonical command once and freeze it in a committed script**
+  (e.g. `experiments/run_eval.sh`) so every experiment runs the byte-identical
+  invocation. Example shape (adapt to what `--help` shows):
+  - Evaluate: `chap <eval-cmd> <model> <dataset.csv> <out>.nc --model-configuration-yaml <config> --run-config.track --backtest-params.n-splits <N> ...`
   - Compare: `chap export-metrics --input-files <a>.nc --input-files <b>.nc ... --output-file comparison.csv`
+- **Validate the frozen command with `--dry-run` before the first real run** — it
+  surfaces missing env vars, bad flags, or column-mapping issues cheaply, before
+  you pay for a full (possibly slow) evaluation.
 
 ## 3. Baseline evaluation
 
+- **Mind the cost.** Many CHAP models fit per-location, per-split (e.g. 400+
+  locations × 7 splits = thousands of fits), so a single evaluation can take many
+  minutes. Tell the user the expected cost up front. **Run evals in the
+  background and monitor for completion** rather than blocking. If iteration is
+  too slow, you may *screen* hypotheses on a reduced dataset/fewer splits — but
+  always confirm a promising result on the full **frozen** harness before
+  declaring it an improvement (only the frozen harness is comparable).
 - Run the harness on the **pristine** model → `experiments/baseline.nc`.
 - Run `export-metrics` with **no** `--metric-ids` once to list every metric the
   installed version supports; confirm `log_crps` (and `crps`) are present. Then
   record `log_crps` (primary), `crps`, RMSE, MAE, and coverage ratios.
 - Create the experiment log `experiments/EXPERIMENTS.md` (a markdown table, see
   below) and keep the running `experiments/comparison.csv`.
-- Add a `.gitignore` entry for `experiments/*.nc` (NetCDF files are large;
-  reproducibility comes from the committed code/config + the frozen command, not
-  the stored `.nc`). Commit the baseline state and the log.
+- **Set up `.gitignore` for chap artifacts** (reproducibility comes from the
+  committed code/config + the frozen command, not these large files):
+  - `*.nc` — NetCDF eval outputs.
+  - `runs/` — chap's per-run working directories (one per evaluation, large).
+  - `mlruns/` and `.venv/` if you created them.
+  - **Watch for a pre-existing global `*.csv` ignore** in the model repo — it can
+    silently swallow your dataset and the experiment `comparison.csv`. Add an
+    exception so the log is committable, e.g. `!experiments/comparison*.csv`.
+- Commit the baseline state, the frozen `run_eval.sh`, and the log.
 
 ## 4. Understand the model
 
@@ -137,8 +177,9 @@ For each experiment (run one hypothesis at a time):
   | # | branch / commit | lever (code/config) | hypothesis / change | log_crps | crps | rmse | mae | coverage | verdict | mlflow run id | notes |
   |---|---|---|---|---|---|---|---|---|---|---|---|
 
-- **Two complementary tracking layers:** this human-readable git log **and**
-  MLflow (via `--track`). Put the MLflow run id in the log row so the two line up.
+- **Two complementary tracking layers:** this human-readable git log (the
+  authoritative record) **and**, optionally, MLflow (via the tracking flag). When
+  MLflow is on, put the run id in the log row so the two line up.
 - Every experiment is a descriptive git commit; promising ones are clearly
   tagged/branched. Any experiment reproduces via `git checkout <ref>` plus the
   frozen `chap` command.
