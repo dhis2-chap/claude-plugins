@@ -33,6 +33,11 @@ and from `chap --help` at runtime (step 0).
 - **Track relentlessly.** Every experiment is a git commit plus a row in the
   experiment log; promising ones are clearly marked. Local git only — never push
   unless the user explicitly asks.
+- **Never commit to a protected branch.** Treat `main`, `master`, and `stable`
+  as read-only — never commit to, merge into, or move them. *All* commits
+  (setup, baseline, and every experiment) go on your own branches. Successful
+  changes stay on their branch and are reported back to the user, who decides
+  whether to integrate them.
 
 ## 0. Orient — every run, before doing anything else
 
@@ -77,8 +82,11 @@ and from `chap --help` at runtime (step 0).
     state as the first commit.
   - Local folder that **is** a git repo → make sure the working tree is clean
     before starting.
-- Note the **pristine baseline** ref (e.g. `main` or the initial commit). Do all
-  experiments on branches; never overwrite the pristine baseline.
+- Note the **pristine baseline** ref (e.g. `main`/`master` or the initial commit)
+  and leave it untouched. **Immediately create a working branch off it** (e.g.
+  `git checkout -b improve/setup`) and make every commit — setup, baseline, and
+  experiments — on your own branches. Never commit to or move `main`/`master`/
+  `stable`.
 - Confirm the model is CHAP-compatible: read its `MLproject` and the `train` /
   `predict` entry points it declares (see the running-external-models docs).
 
@@ -136,7 +144,8 @@ Everything here is chosen **once** and then frozen for the whole session.
   - **Watch for a pre-existing global `*.csv` ignore** in the model repo — it can
     silently swallow your dataset and the experiment `comparison.csv`. Add an
     exception so the log is committable, e.g. `!experiments/comparison*.csv`.
-- Commit the baseline state, the frozen `run_eval.sh`, and the log.
+- Commit the baseline state, the frozen `run_eval.sh`, and the log **on your
+  working branch** (e.g. `improve/setup`) — never on `main`/`master`/`stable`.
 
 ## 4. Understand the model
 
@@ -151,7 +160,8 @@ for each whether it is tuned via the **config file** or the **model code**.
 
 For each experiment (run one hypothesis at a time):
 
-1. **Branch** from the baseline (or the current best): `git checkout -b exp/<short-desc>`.
+1. **Branch** from the setup/baseline branch (or the current best branch) — never
+   from a protected branch: `git checkout -b exp/<short-desc>`.
 2. **Make one change**, on exactly one of two levers:
    - **(a) Config file** — hyperparameters, covariate selection, priors, etc.
    - **(b) Model code** — train/predict logic, feature engineering, etc.
@@ -193,3 +203,6 @@ For each experiment (run one hypothesis at a time):
 - When stopping, report: the best model vs. baseline (metric deltas), which
   changes helped and which hurt, and the **exact reproduction steps** (the git
   ref to check out and the frozen `chap` command to run).
+- **Name the branch** that holds the best result and leave it there. Do **not**
+  merge it into `main`/`master`/`stable` or push it — integration is the user's
+  decision. End by telling the user which branch to review.
