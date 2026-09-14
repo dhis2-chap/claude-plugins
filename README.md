@@ -115,6 +115,7 @@ repo's `.claude/settings.json` and commit it:
 |--------|-------------|
 | `hello-world` | Example plugin — a `/hello` command and an example skill. Copy it as a template for new plugins. |
 | `improve-chap-model` | Iteratively improve an existing CHAP model. Evaluates a model (local folder or GitHub URL) on a dataset with the `chap` CLI, tunes the model code and/or config, and tracks every experiment with git. Run `/improve-chap-model`. |
+| `discourse` | Set up and use the Discourse MCP server against the DHIS2 Community of Practice (community.dhis2.org). Run `/discourse-setup` once, then ask Claude to search the CoP, read threads, or draft a release announcement in the Chap category. |
 
 ---
 

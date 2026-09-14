@@ -27,6 +27,15 @@
       "author": {
         "name": "DHIS2 CHAP"
       }
+    },
+    {
+      "name": "discourse",
+      "source": "./plugins/discourse",
+      "description": "Set up and use the Discourse MCP server against the DHIS2 Community of Practice (community.dhis2.org): search and read topics, draft release announcements and replies in the Chap category.",
+      "version": "0.1.0",
+      "author": {
+        "name": "DHIS2 CHAP"
+      }
     }
   ]
 }

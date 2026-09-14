@@ -1,0 +1,15 @@
+{
+  "name": "discourse",
+  "displayName": "Discourse (DHIS2 Community of Practice)",
+  "version": "0.1.0",
+  "description": "Set up and use the Discourse MCP server against community.dhis2.org: search and read CoP topics, and draft release announcements and replies in the Chap category.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": ["discourse", "community", "cop", "mcp", "chap"]
+}
