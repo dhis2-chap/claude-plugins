@@ -36,6 +36,15 @@
       "author": {
         "name": "DHIS2 CHAP"
       }
+    },
+    {
+      "name": "convert-to-chapkit",
+      "source": "./plugins/convert-to-chapkit",
+      "description": "Convert an existing CHAP model repo (MLproject plus train/predict scripts, Python or R) into a chapkit 2.x ML service, gated on numeric parity with the pre-conversion predictions.",
+      "version": "0.1.0",
+      "author": {
+        "name": "DHIS2 CHAP"
+      }
     }
   ]
 }
