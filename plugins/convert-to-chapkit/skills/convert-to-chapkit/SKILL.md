@@ -216,9 +216,10 @@ and migrate guides.
 ### Universal
 
 - Write the Config class: one field per `user_option` with the MLproject default
-  and its title as `Field(description=...)`, plus a **default for
-  `prediction_periods`**, plus the **`user_option_values` hoisting validator**.
-  These two are the difference between a service that works and one that
+  and its title as `Field(description=...)`. Pin `chapkit>=2.1.0`: from that
+  release `BaseConfig` defaults `prediction_periods` and hoists chap-core's nested
+  `user_option_values` itself. On older chapkit you must add both by hand (see
+  `references/config-and-runner-snippets.md`); without them a service works and
   silently runs on defaults.
 - Write `MLServiceInfo` / `ModelMetadata` from the `meta_data` block. Decide
   `min_prediction_periods` / `max_prediction_periods` and justify them in a
@@ -280,7 +281,8 @@ and migrate guides.
   need more rows than the default. Raise the timeout - the first job pays for
   workspace copying, JIT and per-location fits.
 - pytest with an in-process `TestClient`: health, info, config schema defaults,
-  config hoisting (nested and flat, flat wins), unseen-location fallback,
+  config hoisting (nested and flat, flat wins; on chapkit 2.1.0+ this tests
+  chapkit itself, keep it anyway), unseen-location fallback,
   future-row-order preservation, and an accepted-and-ignored test for every
   option you removed.
 - `DATABASE_URL` must be set to a temp SQLite **file** before `main` is
@@ -375,7 +377,7 @@ Finally, remove the legacy runner surface once everything above is green:
 - [ ] Baseline captured from a worktree of the base SHA with the new venv, and
       the `__file__` provenance check passed.
 - [ ] Determinism established (predict twice, `cmp`); parity class chosen.
-- [ ] `prediction_periods` has a default; `user_option_values` are hoisted.
+- [ ] `chapkit>=2.1.0` pinned (or, on older chapkit, `prediction_periods` defaulted and `user_option_values` hoisted by hand).
 - [ ] Every period type the service claims is covered by data and by tests.
 - [ ] Parity green three ways; exactly-equal cell counts recorded.
 - [ ] `git diff <base> -- <numeric core>` is empty (or every hunk is justified).

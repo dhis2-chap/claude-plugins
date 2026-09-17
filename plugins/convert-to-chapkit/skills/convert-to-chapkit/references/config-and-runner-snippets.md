@@ -16,7 +16,7 @@ from pydantic import Field, HttpUrl, model_validator
 class MyModelConfig(BaseConfig):
     """Tunables for a single train/predict run - the MLproject `user_options` block."""
 
-    # BaseConfig declares prediction_periods with NO default and chap-core never
+    # chapkit < 2.1.0 only: BaseConfig declared prediction_periods with NO default and chap-core never
     # sends it, so without this every chap-core config POST is a 422.
     prediction_periods: int = Field(default=3, description="Number of periods to predict into the future")
 
@@ -38,6 +38,9 @@ class MyModelConfig(BaseConfig):
     @classmethod
     def _hoist_user_option_values(cls, data: object) -> object:
         """Accept chap-core's nested `user_option_values` payload as flat fields.
+
+        Only needed on chapkit < 2.1.0; from 2.1.0 BaseConfig does this itself and
+        this validator should be omitted.
 
         chap-core posts `{"name": ..., "user_option_values": {...}}`. BaseConfig sets
         extra="allow", so without this hook the dict is stored verbatim as an unknown
