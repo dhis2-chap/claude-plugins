@@ -57,7 +57,8 @@ class MyModelConfig(BaseConfig):
             return payload
         hoisted: dict[str, object] = {k: v for k, v in payload.items() if k != "user_option_values"}
         for key, value in cast(dict[str, object], nested).items():
-            hoisted.setdefault(key, value)
+            if key not in hoisted:
+                hoisted[key] = value
         return hoisted
 ```
 
