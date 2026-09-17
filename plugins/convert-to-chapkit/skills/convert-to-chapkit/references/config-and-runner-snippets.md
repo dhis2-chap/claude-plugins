@@ -7,8 +7,10 @@ minor versions.
 ## The Config class
 
 ```python
+from typing import cast
+
 from chapkit import BaseConfig
-from pydantic import Field, model_validator
+from pydantic import Field, HttpUrl, model_validator
 
 
 class MyModelConfig(BaseConfig):
@@ -47,12 +49,16 @@ class MyModelConfig(BaseConfig):
         setdefault means flat keys win over nested ones, so `chapkit test` (flat) and
         chap-core (nested) land on the same object.
         """
-        if isinstance(data, dict) and isinstance(data.get("user_option_values"), dict):
-            hoisted = {k: v for k, v in data.items() if k != "user_option_values"}
-            for key, value in data["user_option_values"].items():
-                hoisted.setdefault(key, value)
-            return hoisted
-        return data
+        if not isinstance(data, dict):
+            return data
+        payload = cast(dict[str, object], data)
+        nested = payload.get("user_option_values")
+        if not isinstance(nested, dict):
+            return payload
+        hoisted: dict[str, object] = {k: v for k, v in payload.items() if k != "user_option_values"}
+        for key, value in cast(dict[str, object], nested).items():
+            hoisted.setdefault(key, value)
+        return hoisted
 ```
 
 Verify by hand before trusting it:
@@ -187,7 +193,7 @@ info = MLServiceInfo(
         author_assessed_status=AssessedStatus.yellow,
         contact_email="...",
         organization="HISP Centre, University of Oslo",
-        organization_logo_url="...",
+        organization_logo_url=HttpUrl("https://..."),  # HttpUrl, not str: a bare string fails basedpyright
         citation_info="...",
     ),
     period_type=PeriodType.any,               # MLproject supported_period_type
