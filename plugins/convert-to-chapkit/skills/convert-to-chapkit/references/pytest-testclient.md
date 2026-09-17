@@ -5,8 +5,9 @@ container, no second terminal. With a `ShellModelRunner` the jobs still fork
 real subprocesses into real temp workspaces, so nothing about the runner path is
 mocked.
 
-Add to the dev dependency group: `pytest>=8`, `httpx>=0.28` (`TestClient` needs
-it). In `pyproject.toml`:
+Add to the dev dependency group: `pytest>=8`, `httpx2>=2.13` (Starlette 1.6+
+`TestClient` imports `httpx2`; with only `httpx` it still works but emits a
+deprecation warning). Confirm against the installed Starlette version. In `pyproject.toml`:
 
 ```toml
 [tool.pytest.ini_options]

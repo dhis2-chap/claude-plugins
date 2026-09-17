@@ -184,8 +184,8 @@ and migrate guides.
   produced.
 - `pyproject.toml`: `requires-python = ">=3.13"` (chapkit 2 and the
   `chapkit-py` base image are 3.13); `chapkit>=2.x,<3`; the model's own deps,
-  **pinned**; a PEP 735 `[dependency-groups] dev` with `pytest`, `httpx`,
-  `ruff`; `[tool.pytest.ini_options]` with `pythonpath = ["."]` if `main.py`
+  **pinned**; a PEP 735 `[dependency-groups] dev` with `pytest`, `httpx2`
+  (Starlette 1.6+ `TestClient`; plain `httpx` only warns), `ruff`; `[tool.pytest.ini_options]` with `pythonpath = ["."]` if `main.py`
   sits at the root; ruff config with `target-version = "py313"`.
 - **Add the frozen numeric core and `*.md` to `[tool.ruff] extend-exclude`
   before the first `ruff format .`.** Otherwise the formatter rewrites the one
