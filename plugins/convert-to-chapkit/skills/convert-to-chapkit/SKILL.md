@@ -223,7 +223,13 @@ and migrate guides.
   silently runs on defaults.
 - Write `MLServiceInfo` / `ModelMetadata` from the `meta_data` block. Decide
   `min_prediction_periods` / `max_prediction_periods` and justify them in a
-  comment.
+  comment. chapkit 2.1.0 enforces them against the real horizon of every
+  request, so placeholders now reject jobs.
+- Take the forecast horizon from the future rows at predict time, as the
+  legacy scripts did. Since chapkit 2.1.0 `config.prediction_periods` (and the
+  key in `config.yml`) is filled per request from chap-core's `run_info`; at
+  train time that value is real only with chap-core master from 2026-09-18
+  (CLIM-1123), released chap-core sends 1. See `references/gotchas.md`.
 - `ArtifactHierarchy`, the `DATABASE_URL` block, `MLServiceBuilder(...)
   .with_monitoring().with_registration(...).build()`, and a
   `if __name__ == "__main__": run_app(...)` block for local dev.
