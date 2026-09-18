@@ -1,0 +1,15 @@
+{
+  "name": "convert-to-chapkit",
+  "displayName": "Convert to Chapkit",
+  "version": "0.1.0",
+  "description": "Convert an existing CHAP model repo (MLproject plus train/predict scripts, Python or R) into a chapkit 2.x ML service, with a captured pre-conversion baseline and a numeric parity gate that proves the predictions did not move.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": ["chap", "chapkit", "mlproject", "migration", "parity"]
+}
