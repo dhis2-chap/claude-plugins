@@ -117,6 +117,7 @@ repo's `.claude/settings.json` and commit it:
 | `improve-chap-model` | Iteratively improve an existing CHAP model. Evaluates a model (local folder or GitHub URL) on a dataset with the `chap` CLI, tunes the model code and/or config, and tracks every experiment with git. Run `/improve-chap-model`. |
 | `discourse` | Set up and use the Discourse MCP server against the DHIS2 Community of Practice (community.dhis2.org). Run `/discourse-setup` once, then ask Claude to search the CoP, read threads, or draft a release announcement in the Chap category. |
 | `convert-to-chapkit` | Convert an existing CHAP model repo (`MLproject` plus train/predict scripts, Python or R) into a chapkit 2.x service. Captures a pre-conversion baseline, maps every `MLproject` field, and gates the PR on numeric parity with the legacy predictions. Run `/convert-to-chapkit`. |
+| `jira-audit` | Audit CLIM Jira against what has landed in the chap repos: wrong statuses, outdated epic/issue descriptions, duplicates and missing components. Produces a shareable report with tiered proposed changes and applies the ones you approve. Needs the Atlassian MCP. Run `/jira-audit`. |
 
 ---
 
