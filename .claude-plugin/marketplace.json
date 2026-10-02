@@ -13,7 +13,7 @@
     {
       "name": "hello-world",
       "source": "./plugins/hello-world",
-      "description": "Example plugin — a starting template with one slash command and one skill.",
+      "description": "Example plugin \u2014 a starting template with one slash command and one skill.",
       "version": "0.1.0",
       "author": {
         "name": "DHIS2 CHAP"
@@ -41,6 +41,15 @@
       "name": "convert-to-chapkit",
       "source": "./plugins/convert-to-chapkit",
       "description": "Convert an existing CHAP model repo (MLproject plus train/predict scripts, Python or R) into a chapkit 2.x ML service, gated on numeric parity with the pre-conversion predictions.",
+      "version": "0.1.0",
+      "author": {
+        "name": "DHIS2 CHAP"
+      }
+    },
+    {
+      "name": "jira-audit",
+      "source": "./plugins/jira-audit",
+      "description": "Audit CLIM Jira against the chap repos: wrong statuses, outdated descriptions, duplicates, missing components. Shareable report with tiered proposed changes; applies what you approve. Run /jira-audit.",
       "version": "0.1.0",
       "author": {
         "name": "DHIS2 CHAP"

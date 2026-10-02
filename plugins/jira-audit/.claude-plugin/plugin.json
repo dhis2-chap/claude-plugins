@@ -1,0 +1,15 @@
+{
+  "name": "jira-audit",
+  "displayName": "Jira Audit",
+  "version": "0.1.0",
+  "description": "Audit CLIM Jira issues against what has actually landed in the chap repos: wrong statuses, outdated descriptions, duplicates and missing components. Produces a shareable report with tiered proposed changes, and applies the ones you approve.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": ["jira", "audit", "chap", "sprint"]
+}
