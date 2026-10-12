@@ -1,0 +1,15 @@
+{
+  "name": "docs-review",
+  "displayName": "Docs Review",
+  "version": "0.1.0",
+  "description": "Review documentation across the modeling platform and climate team repos to find holes: docs that no longer match the code, overlap and contradictions between sources, places where a reader gets stuck, and broken structure and links. Produces a shareable report.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": ["docs", "documentation", "review", "chap", "climate"]
+}
