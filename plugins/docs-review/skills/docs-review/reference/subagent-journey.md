@@ -41,9 +41,11 @@ Write `{workdir}/findings_journey_<first number>.json` (findings format,
 `check: "journey"`, `rule` such as `journey-gap`, `journey-dead-end`,
 `journey-missing-prereq`, `journey-outdated-step`). Put the step in `where` and,
 in `evidence`, the path taken so far as one string ("newcomer.md -> minimalist_example
-README -> ..."). Add one finding with `rule: "journey-summary"`, `severity: "Low"`,
-per journey, whose title says whether the goal was reachable, and whose evidence is
-the full path. Validate that it parses.
+README -> ..."). Set `journey` to the journey's number
+on every finding. Add one finding with `rule: "journey-summary"`, `severity: "Low"`,
+per journey, with `outcome` set to `reached`, `reached with gaps` or `stuck`, a title
+that says the outcome and where, and the full path as evidence. The report opens with
+these summaries. Validate that it parses.
 
 Reply with only: per journey, reached or stuck and the number of findings, plus any
 problems. Do not paste the findings.

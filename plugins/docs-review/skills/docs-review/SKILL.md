@@ -75,17 +75,24 @@ errors.
 python3 report.py
 ```
 
-Before publishing, verify two or three High findings yourself against the clones
-(open the file and line, confirm the claim). Drop or downgrade any that do not hold,
-in the findings file, and rerun `report.py`.
+The report opens with the journey outcomes (one row per reader), the counts, a
+"Fix first" list (High findings with the widest reach) and an "Easy fixes" list
+(`effort: small` and `confidence: confirmed`). If `report.py` prints findings
+without effort or confidence, a reviewer skipped the fields: send that subagent back
+to set them.
+
+Before publishing, verify two or three "Fix first" findings and one or two easy fixes
+yourself against the clones (open the file and line, confirm the claim). Drop or
+downgrade any that do not hold, in the findings file, and rerun `report.py`.
 
 Load the `artifact-design` skill, as the Artifact tool requires, then publish
 `WORKDIR/report.html` with the Artifact tool (icon `book`). The page already follows
 the artifact contract; do not redesign it. It starts private; sharing is done from the
 page's Share menu.
 
-Reply with: the link, counts per check and severity, three to five notable findings
-in one line each, and what you verified. Do not paste the whole list. If the user
+Reply with: the link, the journey outcomes in one line each, counts per check and
+severity, the number of easy fixes, three to five notable findings in one line each,
+and what you verified. Do not paste the whole list. If the user
 wants issues or fixes from the report, that is a separate step they ask for.
 
 ## Principles

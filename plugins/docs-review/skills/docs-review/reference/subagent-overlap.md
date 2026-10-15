@@ -51,7 +51,8 @@ contradiction and say which side the code supports.
 ## Output
 
 Write `{workdir}/findings_overlap_<team>.json` (findings format, `check: "overlap"`,
-`where` listing every copy). Validate that it parses.
+`where` listing every copy). Set `effort` and `confidence` on every finding as
+`findings.md` defines them. Validate that it parses.
 
 Reply with only: number of topics mapped, counts by rule and severity, and any
 problems. Do not paste the findings.

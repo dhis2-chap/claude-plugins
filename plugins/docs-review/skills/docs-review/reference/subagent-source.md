@@ -66,7 +66,8 @@ your reply.
 ## Output
 
 Write `{workdir}/findings_src_<group>.json` (a JSON list in the findings format, `check`
-set to `code` or `structure`). Validate that it parses. Name any helper script
+set to `code` or `structure`). Set `effort` and `confidence` on every finding as
+`findings.md` defines them. Validate that it parses. Name any helper script
 `src_<group>_*.py`.
 
 Reply with only: counts by check and severity, pages reviewed, pages skipped, and any
