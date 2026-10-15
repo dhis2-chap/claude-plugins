@@ -1,0 +1,15 @@
+{
+  "name": "product-landscape-diagram",
+  "displayName": "Product Landscape Diagram",
+  "version": "0.1.0",
+  "description": "Workshop facilitator: interviews a group about the tools and products they build and depend on, from getting data into DHIS2 to enabling decisions, and draws a live diagram of how they relate.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": ["workshop", "diagram", "chap", "products"]
+}
