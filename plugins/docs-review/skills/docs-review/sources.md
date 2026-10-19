@@ -53,16 +53,7 @@ Columns:
 
 ## Journeys
 
-Starting points for the journey check. Each is a reader with a goal; the reviewer
-follows the docs the way that reader would. Edit freely.
-
-| team | reader | goal | starts at |
-|------|--------|------|-----------|
-| modeling | newcomer model developer | get a first model running and evaluated with `chap eval` | chap-core `external_models/newcomer.md`, minimalist_example |
-| modeling | experienced modeller | wrap an existing model and evaluate it | chap-core `external_models/experienced_modeller.md`, chapkit docs |
-| modeling | DHIS2 implementer | install Chap next to DHIS2, keep it updated and add models | chap-core `modeling-app/index.md` |
-| modeling | Modeling App user | create a dataset, an evaluation and a prediction | chap-frontend `apps/modeling-app/docs/user-guides` |
-| modeling | chap-core contributor | set up a dev environment and open a first PR | chap-core `contributor/index.md` |
-| climate | OCS installer | install OCS and get data into DHIS2 on a schedule | open-climate-service `docs/setup_guide.md` |
-| climate | climate data scientist | fetch and aggregate climate data for DHIS2 org units | climate-tools `docs/getting-started/intro.md` |
-| climate | DHIS2 user | import weather and climate data with the Climate app | climate-app `README.md` |
+The reader journeys are the user stories in
+[dhis2-chap/user-stories](https://github.com/dhis2-chap/user-stories), one YAML file
+per domain. A story is reviewed when the repo it starts in is selected above. Add or
+change journeys there, not here.

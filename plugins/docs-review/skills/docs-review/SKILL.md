@@ -10,8 +10,10 @@ duplicated or contradicts across sources, where a reader gets stuck, and what is
 broken or unreachable. The run is read-only and ends in a report; nothing is edited,
 and no issues or PRs are created.
 
-The sources live in `sources.md` next to this file. Scripts are in `scripts/`, the
-subagent briefs and the findings format in `reference/`.
+The sources live in `sources.md` next to this file. The reader journeys are the user
+stories in [dhis2-chap/user-stories](https://github.com/dhis2-chap/user-stories).
+Scripts are in `scripts/`, the subagent briefs and the findings format in
+`reference/`.
 
 ## Requirements
 
@@ -41,11 +43,13 @@ they chose to name repos, take the names as free text.
 ```
 cd WORKDIR
 cp SKILL_DIR/scripts/*.py .
-python3 pick.py SKILL_DIR/sources.md --teams modeling,climate [--groups ...] [--repos ...] --checks code,overlap,journey,structure
+git -c credential.helper='!gh auth git-credential' clone -q --depth 1 https://github.com/dhis2-chap/user-stories.git stories
+uv run --with pyyaml python pick.py SKILL_DIR/sources.md --stories stories --teams modeling,climate [--groups ...] [--repos ...] --checks code,overlap,journey,structure
 python3 fetch.py
 uv run --with pyyaml python structure.py
 ```
 
+Skip the user-stories clone and `--stories` when the journey check is not selected.
 `fetch.py` clones every selected repo shallow over HTTPS in parallel (seconds, not
 minutes) and lists the repos in each org. If a clone fails, report it and continue
 without that repo. Run `structure.py` even when the structure check is not selected:
@@ -100,5 +104,6 @@ wants issues or fixes from the report, that is a separate step they ask for.
 - Every finding has evidence a reader can open: a `file:line`, a URL or a quote.
 - Neutral wording about the docs, never about people. The report is shared.
 - Read-only: no edits, commits, issues or PRs during the review.
-- Keep `sources.md` the single place that says what is reviewed. If the user asks to
-  add or drop a source permanently, change that file in the plugin repo.
+- Keep `sources.md` the single place that says which repos are reviewed, and the
+  user-stories repo the single place for journeys. If the user asks to add or drop
+  a source or a journey permanently, change the file there.

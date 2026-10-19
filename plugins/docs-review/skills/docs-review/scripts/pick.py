@@ -1,14 +1,19 @@
 """Pick sources from sources.md and write config.json.
 
-Usage: python pick.py SOURCES_MD [--teams modeling,climate] [--groups core,ocs]
+Usage: python pick.py SOURCES_MD [--stories DIR] [--teams modeling,climate] [--groups core,ocs]
                         [--repos chap-core,climate-app] [--checks code,overlap,journey,structure]
 Teams default to both; shared sources are added whenever any team is picked.
 --groups and --repos narrow the selection further (a repo is kept if it matches either).
+--stories is a clone of dhis2-chap/user-stories; a story becomes a journey when the repo
+it starts in is selected. Needs PyYAML.
 Prints the selected groups and repos.
 """
 import argparse
+import glob
 import json
-import re
+import os
+
+import yaml
 
 ALL_CHECKS = ["code", "overlap", "journey", "structure"]
 
@@ -32,6 +37,7 @@ def csv(s):
 
 p = argparse.ArgumentParser()
 p.add_argument("sources_md")
+p.add_argument("--stories", default="")
 p.add_argument("--teams", default="modeling,climate")
 p.add_argument("--groups", default="")
 p.add_argument("--repos", default="")
@@ -55,14 +61,21 @@ for r in table(text, "Sources"):
         "published": r["published"], "audience": r["audience"],
     })
 
-names = {s["name"] for s in sources}
-journeys = [j for j in table(text, "Journeys") if j["starts at"].split()[0] in names]
+team_of = {s["name"]: s["team"] for s in sources}
+journeys = []
+for path in sorted(glob.glob(os.path.join(a.stories, "*.yaml"))) if a.stories else []:
+    for st in yaml.safe_load(open(path)) or []:
+        first = st["starts_at"][0]["repo"].split("/")[1]
+        if first in team_of:
+            journeys.append({**st, "team": team_of[first]})
 checks = [c for c in csv(a.checks) if c in ALL_CHECKS]
 bad = set(csv(a.checks)) - set(ALL_CHECKS)
 if bad:
     raise SystemExit(f"unknown checks: {sorted(bad)}; use {ALL_CHECKS}")
 if not sources:
     raise SystemExit("no sources matched")
+if "journey" in checks and not a.stories:
+    raise SystemExit("the journey check needs --stories")
 
 cfg = {"sources": sources, "journeys": journeys, "checks": checks,
        "groups": sorted({s["group"] for s in sources}),

@@ -13,8 +13,10 @@ install software or run the commands; read them and check them against the code.
 
 ## Where things are
 
-- Work dir: `{workdir}`. `config.json` has `journeys` (numbered from 1 in list order):
-  each a reader, a goal and where they start.
+- Work dir: `{workdir}`. `config.json` has `journeys` (numbered from 1 in list order),
+  taken from the user stories: each an `id`, a `reader`, a `goal`, `starts_at` (repo
+  and path, in order) and optionally `done_when`. When `done_when` is given, the goal
+  is reached only if every item is.
 - Clones in `{workdir}/repos/<name>/`. Docs at each source's `docs` paths; the code
   is the rest of the repo.
 - Findings format and severity: `{skill_dir}/reference/findings.md`. Read it first.
