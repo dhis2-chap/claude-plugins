@@ -14,6 +14,7 @@
 | E2 | Epic Done, children open | script | High |
 | E3 | Epic description no longer matches its children | reviewer | Medium |
 | E4 | Open epic with no children | script, note only | Note |
+| R1 | Open epic not listed under any initiative on the roadmap page (`roadmap.md`) | script; adding it to the page is up to the team | Medium |
 | D1 | Description claims (paths, endpoints, commands, "currently X") no longer match master or merged PRs | reviewer, with a `file:line` or PR as evidence | Medium/High |
 | D2 | Description empty or too thin to pick up | reviewer | Low/Medium |
 | D3 | Approach superseded by a later issue, PR or decision | reviewer, citing it | Medium |

@@ -49,7 +49,7 @@
     {
       "name": "jira-audit",
       "source": "./plugins/jira-audit",
-      "description": "Audit CLIM Jira against the chap repos: wrong statuses, outdated descriptions, duplicates, missing components. Shareable report with tiered proposed changes; applies what you approve. Run /jira-audit.",
+      "description": "Audit CLIM Jira against the chap repos: wrong statuses, outdated descriptions, duplicates, missing components, epics missing from the roadmap. Shareable report with tiered proposed changes; applies what you approve. Run /jira-audit.",
       "version": "0.1.0",
       "author": {
         "name": "DHIS2 CHAP"
