@@ -109,6 +109,27 @@ repo's `.claude/settings.json` and commit it:
 
 ---
 
+## Using the skills with Codex, Copilot and other agents
+
+The skills inside the plugins use the open Agent Skills format, so other agents
+can use the ones that do not depend on Claude Code. Today that is
+`write-issue`, `convert-to-chapkit` and `improve-chap-model`. Install them with
+the [`skills`](https://github.com/vercel-labs/skills) CLI, from the root of the
+repo you work in:
+
+```
+npx skills add dhis2-chap/claude-plugins --skill write-issue --agent codex github-copilot
+```
+
+Leave out `--skill` to choose from a list, and change `--agent` for other
+agents. Run `npx skills update` to get new versions. Claude Code users do not
+need this; install the plugin instead.
+
+Skills that only work in Claude Code are marked `metadata: internal: true` in
+their `SKILL.md` and are not offered by `npx skills`.
+
+---
+
 ## Available plugins
 
 | Plugin | Description |

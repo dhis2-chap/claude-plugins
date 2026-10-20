@@ -1,6 +1,8 @@
 ---
 name: product-landscape-diagram
-description: Facilitate a group workshop session that maps the tools and products a team builds and depends on, by interviewing the group and drawing a diagram of how the products relate. Use when asked to run the product diagram session, map our products, or facilitate a product landscape diagram.
+description: "Facilitate a group workshop session that maps the tools and products a team builds and depends on, by interviewing the group and drawing a diagram of how the products relate. Use when asked to run the product diagram session, map our products, or facilitate a product landscape diagram."
+metadata:
+  internal: true
 ---
 
 # Product landscape diagram: group facilitator

@@ -1,6 +1,8 @@
 ---
 name: jira-audit
-description: Use when the user wants to audit, clean up or sanity-check CLIM Jira against what has actually been done in the chap repos: wrong statuses (done but open, In Review without a PR, stale In Progress), outdated epic/issue descriptions, duplicates, missing components, open epics not linked from an initiative on the team roadmap page. Produces a shareable HTML report with tiered proposed changes and applies the ones the user approves. Triggers on "audit jira", "go through jira", "check jira against PRs", "jira cleanup", "sprint audit", "apply tier 1".
+description: "Use when the user wants to audit, clean up or sanity-check CLIM Jira against what has actually been done in the chap repos: wrong statuses (done but open, In Review without a PR, stale In Progress), outdated epic/issue descriptions, duplicates, missing components, open epics not linked from an initiative on the team roadmap page. Produces a shareable HTML report with tiered proposed changes and applies the ones the user approves. Triggers on \"audit jira\", \"go through jira\", \"check jira against PRs\", \"jira cleanup\", \"sprint audit\", \"apply tier 1\"."
+metadata:
+  internal: true
 ---
 
 # Jira audit
