@@ -1,7 +1,7 @@
 {
   "name": "hello-world",
   "displayName": "Hello World",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Example plugin for the dhis2-chap marketplace. Copy this directory as a starting point for new plugins.",
   "author": {
     "name": "DHIS2 CHAP",
