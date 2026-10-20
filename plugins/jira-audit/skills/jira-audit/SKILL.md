@@ -1,6 +1,6 @@
 ---
 name: jira-audit
-description: Use when the user wants to audit, clean up or sanity-check CLIM Jira against what has actually been done in the chap repos: wrong statuses (done but open, In Review without a PR, stale In Progress), outdated epic/issue descriptions, duplicates, missing components. Produces a shareable HTML report with tiered proposed changes and applies the ones the user approves. Triggers on "audit jira", "go through jira", "check jira against PRs", "jira cleanup", "sprint audit", "apply tier 1".
+description: Use when the user wants to audit, clean up or sanity-check CLIM Jira against what has actually been done in the chap repos: wrong statuses (done but open, In Review without a PR, stale In Progress), outdated epic/issue descriptions, duplicates, missing components, open epics not linked from an initiative on the team roadmap page. Produces a shareable HTML report with tiered proposed changes and applies the ones the user approves. Triggers on "audit jira", "go through jira", "check jira against PRs", "jira cleanup", "sprint audit", "apply tier 1".
 ---
 
 # Jira audit
@@ -55,6 +55,7 @@ Write `WORKDIR/config.json`:
   "todo_statuses": ["Backlog", "To Do", "Selected for Development"],
   "keywords": ["chap", "chap-core", "chapkit", "modeling app", "modelling app", "modeling platform", "backtest", "prediction", "evaluation", "model template", "marketplace", "benchmark"],
   "umbrella_labels": ["ch-initiative"],
+  "roadmap_page_id": "2064220168",
   "gh_logins": {"ivar": ["ivargr"], "Knut Dagestad Rand": ["knutdrand"], "Edvin Aamot Stava": ["edvinstava"], "Morten Hansen": ["mortenoh"], "Boris Simovski": ["bsimovski"], "Eirik Haugstulen": ["eirikhaugstulen"], "Abyot Asalefew Gizaw": ["abyot"]}
 }
 ```
@@ -80,6 +81,11 @@ Launch, in one message:
   (HTTPS; SSH may need a hardware key touch and hang). For repos that push straight to
   main (no PRs), also `gh api repos/ORG/REPO/commits?per_page=100 --paginate` into
   `commits_REPO.jsonl` with `{sha, date, msg}` per line.
+
+- **Roadmap**, yourself: `getConfluenceContent` with `content_id` = `roadmap_page_id`,
+  `detail: "full"`, `content_format: "markdown"`, and write the body to
+  `WORKDIR/roadmap.md`. This is the team objectives page; every epic key on it counts
+  as linked to an initiative. When the roadmap is revised, update `roadmap_page_id`.
 
 When every subagent has reported, check line counts against
 `searchResultMode: "count"` for each slice. A mismatch means a page was lost: rerun that slice.

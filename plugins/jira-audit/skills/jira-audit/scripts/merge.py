@@ -2,7 +2,7 @@
 
 A mechanical status hint (S1/S2/S3/S5/E1) on an issue a reviewer looked at is
 dropped: the reviewer either confirmed it (and wrote their own finding) or
-refuted it. Notes and rules the reviewers do not cover (H*, E4, S4, E2, C1) are kept.
+refuted it. Notes and rules the reviewers do not cover (H*, E4, S4, E2, C1, R1) are kept.
 """
 import glob
 import json
@@ -19,7 +19,7 @@ for f in glob.glob("batch_*.json"):
     reviewed |= set(b["issues"]) | set(b["epics"])
 dups = json.load(open("findings_dups.json")) if glob.glob("findings_dups.json") else []
 
-KEEP_ALWAYS = {"E4", "C1", "S4", "E2"}
+KEEP_ALWAYS = {"E4", "C1", "S4", "E2", "R1"}
 kept = [m for m in mech if m["rule"][0] == "H" or m["rule"] in KEEP_ALWAYS or m["confidence"] == "Note" or m["key"] not in reviewed]
 dropped = len(mech) - len(kept)
 

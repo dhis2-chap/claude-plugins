@@ -5,6 +5,7 @@ reviewer subagents, except the hygiene notes (H*, E4) and S4/E2/C1 which go
 straight to the report.
 """
 import json
+import os
 import re
 from collections import Counter
 from datetime import datetime, timedelta
@@ -20,6 +21,7 @@ GH = {k.lower(): [v.lower() for v in vs] for k, vs in cfg["gh_logins"].items()}
 
 issues = json.load(open("jira.json"))
 links = json.load(open("links.json"))
+roadmap = set(re.findall(rf"\b{cfg['project']}-\d+\b", open("roadmap.md").read())) if os.path.exists("roadmap.md") else None
 
 
 def same_person(display, login):
@@ -66,6 +68,8 @@ for key, d in issues.items():
         continue
 
     if d["type"] == "Epic":
+        if is_open and roadmap is not None and key not in roadmap:
+            add(key, "R1", "Epic not linked from any initiative on the roadmap page", [f"roadmap page {cfg['roadmap_page_id']}"], "none", "Medium")
         kids = children.get(key, [])
         if not kids:
             if is_open:
