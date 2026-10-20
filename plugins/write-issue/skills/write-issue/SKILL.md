@@ -54,7 +54,9 @@ three need a clear answer or an explicit "open".
 
 ## Epic format
 
-Use these sections, leaving out any that would be empty:
+Use these sections, leaving out any that would be empty (shown here as
+headings for readability; write them in the format described under
+"Writing into Jira" below):
 
 ```
 ## Goal            (or ## Why, as bullets of problems)
@@ -102,6 +104,25 @@ For every new epic:
 2. After the epic is created, show the changed initiative line (the epic key
    added, replacing "No epic yet" if present) and edit the page only after
    the human approves that edit.
+
+## Writing into Jira
+
+Never write Markdown into a Jira issue (description, comment or any text
+field). Jira does not render it, so `##`, `**bold**`, backtick code and
+`[text](url)` show as literal characters. When creating or editing, use one
+of:
+
+- **ADF JSON** (`contentFormat: "adf"`): the default for epics and any
+  description with sections, lists, links or code. Use heading, paragraph,
+  bulletList, orderedList, codeBlock and link nodes. When editing an existing
+  description, read it as ADF and write it back as ADF.
+- **Jira wiki markup** (`h2. Goal`, `* item`, `*bold*`, `{{code}}`,
+  `[text|url]`): where the tool accepts it.
+- **Plain text**: for short issues and comments; a bare URL is a link.
+
+Drafts shown to the human for approval may be previewed as readable text, but
+what is sent to Jira must be in one of the formats above. Do not use
+`contentFormat: "markdown"`.
 
 ## Issue format
 
