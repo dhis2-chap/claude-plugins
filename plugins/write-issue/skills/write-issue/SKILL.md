@@ -65,7 +65,6 @@ headings for readability; write them in the format described under
 ## Out of scope
 ## Open questions
 ## Done when       checkable outcomes, not activities
-## Related         issue keys with a few words each
 ## Appendix        optional, see below
 ```
 
@@ -123,6 +122,19 @@ of:
 Drafts shown to the human for approval may be previewed as readable text, but
 what is sent to Jira must be in one of the formats above. Do not use
 `contentFormat: "markdown"`.
+
+## Related issues
+
+Do not list related issues in a "Related" section at the end of the
+description. Use the **Linked work items** section of the Jira issue instead:
+create an issue link for each one (for example `Relates`, or a more specific
+type such as `Blocks` or `Duplicate` when that is what the human said). Parent
+epics and children are set through the parent field, not as links.
+
+Put the proposed links in the draft (issue key, link type, a few words on
+why) so the human can approve them with the rest. Create the links after the
+issue exists, and only for issues you have read. Mention an issue key in the
+description text only where the sentence needs it, such as in Scope.
 
 ## Issue format
 
