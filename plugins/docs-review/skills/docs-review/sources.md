@@ -56,4 +56,5 @@ Columns:
 The reader journeys are the user stories in
 [dhis2-chap/user-stories](https://github.com/dhis2-chap/user-stories), one YAML file
 per domain. A story is reviewed when the repo it starts in is selected above. Add or
-change journeys there, not here.
+change journeys there, not here. The stories themselves are also reviewed: see
+`reference/subagent-stories.md`.

@@ -13,6 +13,7 @@ from datetime import date
 
 cfg = json.load(open("config.json"))
 repo_of = {s["name"]: s["repo"] for s in cfg["sources"]}
+repo_of.setdefault("user-stories", "dhis2-chap/user-stories")  # the stories reviewer links there
 CHECKS = {"journey": "Reader journeys", "code": "Docs vs code", "overlap": "Overlap between sources",
           "structure": "Structure and links"}
 SEV = ["High", "Medium", "Low"]
