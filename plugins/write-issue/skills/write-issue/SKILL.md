@@ -54,7 +54,9 @@ three need a clear answer or an explicit "open".
 
 ## Epic format
 
-Use these sections, leaving out any that would be empty:
+Use these sections, leaving out any that would be empty (shown here as
+headings for readability; write them in the format described under
+"Writing into Jira" below):
 
 ```
 ## Goal            (or ## Why, as bullets of problems)
@@ -63,7 +65,6 @@ Use these sections, leaving out any that would be empty:
 ## Out of scope
 ## Open questions
 ## Done when       checkable outcomes, not activities
-## Related         issue keys with a few words each
 ## Appendix        optional, see below
 ```
 
@@ -102,6 +103,38 @@ For every new epic:
 2. After the epic is created, show the changed initiative line (the epic key
    added, replacing "No epic yet" if present) and edit the page only after
    the human approves that edit.
+
+## Writing into Jira
+
+Never write Markdown into a Jira issue (description, comment or any text
+field). Jira does not render it, so `##`, `**bold**`, backtick code and
+`[text](url)` show as literal characters. When creating or editing, use one
+of:
+
+- **ADF JSON** (`contentFormat: "adf"`): the default for epics and any
+  description with sections, lists, links or code. Use heading, paragraph,
+  bulletList, orderedList, codeBlock and link nodes. When editing an existing
+  description, read it as ADF and write it back as ADF.
+- **Jira wiki markup** (`h2. Goal`, `* item`, `*bold*`, `{{code}}`,
+  `[text|url]`): where the tool accepts it.
+- **Plain text**: for short issues and comments; a bare URL is a link.
+
+Drafts shown to the human for approval may be previewed as readable text, but
+what is sent to Jira must be in one of the formats above. Do not use
+`contentFormat: "markdown"`.
+
+## Related issues
+
+Do not list related issues in a "Related" section at the end of the
+description. Use the **Linked work items** section of the Jira issue instead:
+create an issue link for each one (for example `Relates`, or a more specific
+type such as `Blocks` or `Duplicate` when that is what the human said). Parent
+epics and children are set through the parent field, not as links.
+
+Put the proposed links in the draft (issue key, link type, a few words on
+why) so the human can approve them with the rest. Create the links after the
+issue exists, and only for issues you have read. Mention an issue key in the
+description text only where the sentence needs it, such as in Scope.
 
 ## Issue format
 
