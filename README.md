@@ -113,7 +113,7 @@ repo's `.claude/settings.json` and commit it:
 
 The skills inside the plugins use the open Agent Skills format, so other agents
 can use the ones that do not depend on Claude Code. Today that is
-`write-issue`, `convert-to-chapkit` and `improve-chap-model`. Install them with
+`write-issue`, `convert-to-chapkit`, `improve-chap-model` and `docs-review`. Install them with
 the [`skills`](https://github.com/vercel-labs/skills) CLI, from the root of the
 repo you work in:
 
@@ -141,6 +141,7 @@ their `SKILL.md` and are not offered by `npx skills`.
 | `jira-audit` | Audit CLIM Jira against what has landed in the chap repos: wrong statuses, outdated epic/issue descriptions, duplicates, missing components and epics missing from the team roadmap. Produces a shareable report with tiered proposed changes and applies the ones you approve. Needs the Atlassian MCP. Run `/jira-audit`. |
 | `product-landscape-diagram` | Workshop facilitator for mapping the products and tools we build and depend on, from getting data into DHIS2 to enabling decisions. Interviews the group with clickable questions and free text, and keeps a live, zoomable diagram updated as an artifact. Workshop instructions in [`plugins/product-landscape-diagram/WORKSHOP.md`](./plugins/product-landscape-diagram/WORKSHOP.md). Run `/product-landscape-diagram`. |
 | `write-issue` | Write or revise Jira epics and issues from discussion with you, not from guesses. Asks for context before drafting, keeps undecided things as open questions, uses a fixed epic format, asks who the finished work should be shown to, and links new epics from the team roadmap page. Filing details (components, labels) come from each repo's own Jira instructions. Triggers when you ask to create or describe an epic or issue. |
+| `docs-review` | Review documentation across the modeling platform and climate team repos to find holes: docs that no longer match the code, overlap and contradictions between sources, places where a reader following the docs gets stuck, and broken structure and links. Pick teams, groups or single repos; the sources are listed in `skills/docs-review/sources.md` and the reader journeys come from [dhis2-chap/user-stories](https://github.com/dhis2-chap/user-stories), which the review also checks against the docs and against the user stories in the open-climate-service documentation. Produces a shareable report. Works in Claude Code and, with fallbacks, in other agents. Run `/docs-review`. |
 
 ---
 
