@@ -1,0 +1,15 @@
+{
+  "name": "write-issue",
+  "displayName": "Write Issue",
+  "version": "0.1.0",
+  "description": "Write or revise Jira epics and issues from discussion, not guesses: ask before drafting, keep undecided things as open questions, a fixed epic format, who to show the work to, and linking new epics from the team roadmap.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": ["jira", "epic", "issue", "chap"]
+}

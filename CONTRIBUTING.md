@@ -64,6 +64,21 @@ with the team, add it here and open a PR.
    `/plugin marketplace update dhis2-chap` to see it, then
    `/plugin install <your-plugin>@dhis2-chap`.
 
+## Claude Code only skills
+
+Skills are also offered to other agents through `npx skills` (see the README).
+If a skill depends on Claude Code features (subagents, artifacts, Claude Code
+settings or MCP setup), add this to its `SKILL.md` frontmatter so it is not
+offered there, and quote the `description` if it contains `: `:
+
+```yaml
+metadata:
+  internal: true
+```
+
+The `hello-world` template has it set; remove it if your skill works in other
+agents.
+
 ## Versioning
 
 Bump `version` in the plugin's `plugin.json` on each change so existing installs

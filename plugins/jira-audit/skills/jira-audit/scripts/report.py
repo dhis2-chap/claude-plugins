@@ -26,7 +26,7 @@ RULES = {
     "S4": "Done, but referenced PRs never merged", "S5": "Not started, but has a PR", "S6": "Delivered by a PR that never cited the key",
     "E1": "Epic open, all children done", "E2": "Epic done, children open", "E3": "Epic text no longer matches children", "E4": "Epic with no children",
     "D1": "Description outdated or wrong", "D2": "Description empty or too thin", "D3": "Description superseded",
-    "U1": "Duplicate", "U2": "Overlap or unlinked follow-up", "C1": "No component",
+    "U1": "Duplicate", "U2": "Overlap or unlinked follow-up", "C1": "No component", "R1": "Epic not on the roadmap",
     "H1": "Assignee differs from PR author", "H2": "Active but unassigned", "H3": "Open, only in closed sprints", "H4": "No epic",
 }
 CONF_ORDER = {"High": 0, "Medium": 1, "Low": 2, "Note": 3}
@@ -39,7 +39,7 @@ TIER_TXT = {
 if SPRINT:
     in_sprint = {k for k, d in issues.items() if any(s["name"] in cfg["sprints"] for s in d["sprints"])}
     for part in ("sub", "dups", "mech"):
-        m[part] = [f for f in m[part] if f["key"] in in_sprint]
+        m[part] = [f for f in m[part] if f["key"] in in_sprint or f["rule"] == "R1"]
     m["reviewed"] = [k for k in m["reviewed"] if k in in_sprint]
     m["clean"] = [k for k in m["clean"] if k in in_sprint]
 
@@ -144,9 +144,10 @@ status_f = [f for f in sub if f["rule"][0] == "S"] + [f for f in mech if f["rule
 epic_f = [f for f in sub if f["rule"] == "E3"] + [f for f in mech if f["rule"] in ("E1", "E2") and f["confidence"] != "Note"]
 desc_f = [f for f in sub if f["rule"][0] == "D"]
 comp_f = [f for f in mech if f["rule"] == "C1"]
+roadmap_f = [f for f in mech if f["rule"] == "R1"]
 hyg = [f for f in mech if f["rule"][0] == "H" or f["rule"] == "E4" or (f["rule"] == "E1" and f["confidence"] == "Note")]
 by_conf = Counter(f["confidence"] for f in sub + dups)
-by_cat = {"Status": len(status_f), "Epics": len(epic_f), "Descriptions": len(desc_f), "Duplicates": len(dups), "Component": len(comp_f)}
+by_cat = {"Status": len(status_f), "Epics": len(epic_f), "Descriptions": len(desc_f), "Duplicates": len(dups), "Component": len(comp_f), "Roadmap": len(roadmap_f)}
 proposed = [f for f in allf if f["_id"]]
 
 
@@ -241,6 +242,9 @@ p.lead{{max-width:72ch}} .method{{max-width:76ch}} .method li{{margin:4px 0}} :f
 <h2>Missing component<span class="cnt">{len(comp_f)}</span></h2>
 <p class="lead muted">Open issues with no component whose text or parent epic points at the audited area. They are invisible on component-filtered boards.</p>
 {table(comp_f)}
+<h2>Epics missing from the roadmap<span class="cnt">{len(roadmap_f)}</span></h2>
+<p class="lead muted">R1 open epics that no initiative on the <a href="{cfg["jira_url"].rstrip("/")}/wiki/spaces/Climate/pages/{cfg.get("roadmap_page_id", "")}" target="_blank" rel="noopener">roadmap page</a> lists. Add the epic key to the initiative it belongs to, or confirm it belongs to none. Listed for every open epic in the components, not only the sprints.</p>
+{table(roadmap_f)}
 <h2>Hygiene notes<span class="cnt">{len(hyg)}</span></h2>
 <p class="lead muted">Mechanical only, no judgement applied. Listed for completeness.</p>
 {hyg_html}

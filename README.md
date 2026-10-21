@@ -109,6 +109,27 @@ repo's `.claude/settings.json` and commit it:
 
 ---
 
+## Using the skills with Codex, Copilot and other agents
+
+The skills inside the plugins use the open Agent Skills format, so other agents
+can use the ones that do not depend on Claude Code. Today that is
+`write-issue`, `convert-to-chapkit` and `improve-chap-model`. Install them with
+the [`skills`](https://github.com/vercel-labs/skills) CLI, from the root of the
+repo you work in:
+
+```
+npx skills add dhis2-chap/claude-plugins --skill write-issue --agent codex github-copilot
+```
+
+Leave out `--skill` to choose from a list, and change `--agent` for other
+agents. Run `npx skills update` to get new versions. Claude Code users do not
+need this; install the plugin instead.
+
+Skills that only work in Claude Code are marked `metadata: internal: true` in
+their `SKILL.md` and are not offered by `npx skills`.
+
+---
+
 ## Available plugins
 
 | Plugin | Description |
@@ -117,7 +138,9 @@ repo's `.claude/settings.json` and commit it:
 | `improve-chap-model` | Iteratively improve an existing CHAP model. Evaluates a model (local folder or GitHub URL) on a dataset with the `chap` CLI, tunes the model code and/or config, and tracks every experiment with git. Run `/improve-chap-model`. |
 | `discourse` | Set up and use the Discourse MCP server against the DHIS2 Community of Practice (community.dhis2.org). Run `/discourse-setup` once, then ask Claude to search the CoP, read threads, or draft a release announcement in the Chap category. |
 | `convert-to-chapkit` | Convert an existing CHAP model repo (`MLproject` plus train/predict scripts, Python or R) into a chapkit 2.x service. Captures a pre-conversion baseline, maps every `MLproject` field, and gates the PR on numeric parity with the legacy predictions. Run `/convert-to-chapkit`. |
-| `jira-audit` | Audit CLIM Jira against what has landed in the chap repos: wrong statuses, outdated epic/issue descriptions, duplicates and missing components. Produces a shareable report with tiered proposed changes and applies the ones you approve. Needs the Atlassian MCP. Run `/jira-audit`. |
+| `jira-audit` | Audit CLIM Jira against what has landed in the chap repos: wrong statuses, outdated epic/issue descriptions, duplicates, missing components and epics missing from the team roadmap. Produces a shareable report with tiered proposed changes and applies the ones you approve. Needs the Atlassian MCP. Run `/jira-audit`. |
+| `product-landscape-diagram` | Workshop facilitator for mapping the products and tools we build and depend on, from getting data into DHIS2 to enabling decisions. Interviews the group with clickable questions and free text, and keeps a live, zoomable diagram updated as an artifact. Workshop instructions in [`plugins/product-landscape-diagram/WORKSHOP.md`](./plugins/product-landscape-diagram/WORKSHOP.md). Run `/product-landscape-diagram`. |
+| `write-issue` | Write or revise Jira epics and issues from discussion with you, not from guesses. Asks for context before drafting, keeps undecided things as open questions, uses a fixed epic format, asks who the finished work should be shown to, and links new epics from the team roadmap page. Filing details (components, labels) come from each repo's own Jira instructions. Triggers when you ask to create or describe an epic or issue. |
 | `docs-review` | Review documentation across the modeling platform and climate team repos to find holes: docs that no longer match the code, overlap and contradictions between sources, places where a reader following the docs gets stuck, and broken structure and links. Pick teams, groups or single repos; the sources are listed in `skills/docs-review/sources.md` and the reader journeys come from [dhis2-chap/user-stories](https://github.com/dhis2-chap/user-stories). Produces a shareable report. Run `/docs-review`. |
 
 ---

@@ -1,6 +1,8 @@
 ---
 name: chap-greeting
-description: Example skill from the hello-world plugin. Use when the user wants a demonstration of how a CHAP marketplace skill is structured, or asks the hello-world plugin to greet them in CHAP style.
+description: "Example skill from the hello-world plugin. Use when the user wants a demonstration of how a CHAP marketplace skill is structured, or asks the hello-world plugin to greet them in CHAP style."
+metadata:
+  internal: true
 ---
 
 # CHAP Greeting (example skill)

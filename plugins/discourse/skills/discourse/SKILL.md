@@ -1,6 +1,8 @@
 ---
 name: discourse
-description: Use when the user wants to set up or use Discourse / the DHIS2 Community of Practice (community.dhis2.org, "CoP") from Claude Code - searching or reading forum topics, checking what users are asking about chap, drafting or posting release announcements and replies in the Chap category, or fixing a Discourse MCP server that is missing, unauthenticated, or has no write tools.
+description: "Use when the user wants to set up or use Discourse / the DHIS2 Community of Practice (community.dhis2.org, \"CoP\") from Claude Code - searching or reading forum topics, checking what users are asking about chap, drafting or posting release announcements and replies in the Chap category, or fixing a Discourse MCP server that is missing, unauthenticated, or has no write tools."
+metadata:
+  internal: true
 ---
 
 # Discourse (DHIS2 Community of Practice)
