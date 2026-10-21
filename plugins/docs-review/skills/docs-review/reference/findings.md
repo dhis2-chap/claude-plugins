@@ -1,6 +1,7 @@
 # Findings format
 
-Every subagent and script writes a JSON list of findings to `WORKDIR/findings_<id>.json`.
+Every reviewer (a subagent, or the main agent doing a brief itself) and every script
+writes a JSON list of findings to `WORKDIR/findings_<id>.json`.
 `report.py` merges all `findings_*.json` files.
 
 ```json

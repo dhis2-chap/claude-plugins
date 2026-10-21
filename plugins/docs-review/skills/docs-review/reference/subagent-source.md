@@ -2,7 +2,8 @@
 
 Fill the placeholders, write this to `{workdir}/SOURCE_BRIEF.md`, then launch one
 subagent per group with the prompt: "Read `{workdir}/SOURCE_BRIEF.md` and follow it
-for group <group>. Everything is read-only."
+for group <group>. Everything is read-only." Without subagents, follow the brief
+yourself for each group in turn; "you" below then means you.
 
 ---
 

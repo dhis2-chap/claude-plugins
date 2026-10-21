@@ -3,7 +3,8 @@
 Fill the placeholders, write this to `{workdir}/JOURNEY_BRIEF.md`, then launch one
 subagent per batch of journeys (at most three journeys per subagent, one team per
 batch) with the prompt: "Read `{workdir}/JOURNEY_BRIEF.md` and follow it for journeys
-<numbers>. Everything is read-only."
+<numbers>. Everything is read-only." Without subagents, follow the brief yourself
+for each batch in turn; "you" below then means you.
 
 ---
 

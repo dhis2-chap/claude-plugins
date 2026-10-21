@@ -2,7 +2,8 @@
 
 Fill the placeholders, write this to `{workdir}/OVERLAP_BRIEF.md`, then launch one
 subagent per selected team with the prompt: "Read `{workdir}/OVERLAP_BRIEF.md` and
-follow it for team <team>. Everything is read-only."
+follow it for team <team>. Everything is read-only." Without subagents, follow the
+brief yourself for each team in turn; "you" below then means you.
 
 ---
 
