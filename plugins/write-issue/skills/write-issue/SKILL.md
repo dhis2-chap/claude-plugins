@@ -1,6 +1,6 @@
 ---
 name: write-issue
-description: Write or revise the description of a Jira epic or issue. Use whenever asked to create, draft, write, describe, flesh out or rewrite an epic, story, task or bug, including "make an epic for X", "create an issue for this" or "update the description of CLIM-123".
+description: Write or revise the description of a Jira epic or issue. Use whenever asked to create, draft, write, describe, flesh out or rewrite an epic, story, task or bug, including "make an epic for X", "create an issue for this", "update the description of CLIM-123", "check this with leadership" or "mark this for leadership".
 ---
 
 # Writing epics and issues
@@ -135,6 +135,38 @@ Put the proposed links in the draft (issue key, link type, a few words on
 why) so the human can approve them with the rest. Create the links after the
 issue exists, and only for issues you have read. Mention an issue key in the
 description text only where the sentence needs it, such as in Scope.
+
+## Leadership check
+
+Some decisions need to be checked with leadership before the work goes
+ahead. Mark these issues with the Jira label `ch-leadership` (exact spelling;
+labels are free text and a typo creates a new label). This applies in every
+repo, whatever its own Jira instructions say about labels.
+
+Typical cases:
+
+- naming: products, models, public terms
+- making something public, and when
+- external communication and announcements
+- commitments to partners or countries
+- changes to priorities or scope
+
+When the human says the issue needs a leadership check, in any wording
+("check with leadership", "ask leadership", "needs a leadership decision",
+"leadership must approve"), use the label. When the issue touches one of the
+cases above but the human has not said so, ask whether it needs a leadership
+check; do not add the label on your own. To mark an issue:
+
+1. Add `ch-leadership` to the issue's labels, next to the other labels the
+   repo requires.
+2. Start the description with a paragraph `Leadership question:` followed by
+   the question in one or two sentences, so it can be answered without
+   reading the rest.
+3. When leadership has decided, add a comment with the decision and remove
+   the label.
+
+Open leadership questions:
+`labels = ch-leadership AND statusCategory != Done ORDER BY updated ASC`
 
 ## Issue format
 
