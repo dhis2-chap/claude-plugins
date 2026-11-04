@@ -1,5 +1,5 @@
 """Shallow-clone every selected repo into repos/ in parallel, and list the repos that
-exist in each org (for the dead-repo link check).
+exist in each org (for the dead-repo link check in structure.py and for coverage.py).
 
 Usage: python fetch.py
 Clones over HTTPS with the gh credential helper (SSH may wait for a hardware key).
@@ -26,17 +26,20 @@ def clone(src):
 
 
 def org_repos(org):
-    r = subprocess.run(["gh", "repo", "list", org, "--limit", "2000", "--json", "name", "--jq", ".[].name"],
+    r = subprocess.run(["gh", "repo", "list", org, "--limit", "2000", "--json",
+                        "name,description,isArchived,isFork,visibility,createdAt,pushedAt,repositoryTopics"],
                        capture_output=True, text=True, timeout=300)
-    return org, r.stdout.split()
+    return org, json.loads(r.stdout) if r.returncode == 0 and r.stdout.strip() else []
 
 
 orgs = sorted({s["repo"].split("/")[0] for s in cfg["sources"]} | {"dhis2", "dhis2-chap"})
 with ThreadPoolExecutor(max_workers=12) as ex:
     clones = list(ex.map(clone, cfg["sources"]))
-    existing = dict(ex.map(org_repos, orgs))
+    meta = dict(ex.map(org_repos, orgs))
 
+existing = {o: [r["name"] for r in v] for o, v in meta.items()}
 json.dump(existing, open("org_repos.json", "w"))
+json.dump(meta, open("org_repos_meta.json", "w"))
 failed = [(n, s) for n, s in clones if s not in ("ok", "kept")]
 print(f"cloned {len(clones) - len(failed)}/{len(clones)}; org repo lists: "
       + ", ".join(f"{o}={len(v)}" for o, v in existing.items()))

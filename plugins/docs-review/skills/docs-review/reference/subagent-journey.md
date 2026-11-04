@@ -38,6 +38,15 @@ Today is {today}.
 4. Stop when the goal is reached or the reader would be stuck. A dead end that
    cannot be completed from the docs is High.
 
+## Earlier reviews
+
+If `{workdir}/brain/Human-AI-collaboration/Reports/` exists (chap-first-brain, the
+team's knowledge base), grep the reports whose file names contain `qcDoc` for the
+pages and repos on your path, and read the findings sections of those that match.
+Re-check every problem they raised on your path. If it is still there, report it as
+usual and add "first reported in <report file name>" to its `evidence`. If it is
+fixed, only count it for your reply. Do not report anything else from those reports.
+
 ## Output
 
 Write `{workdir}/findings_journey_<first number>.json` (findings format,
@@ -50,5 +59,6 @@ per journey, with `outcome` set to `reached`, `reached with gaps` or `stuck`, a 
 that says the outcome and where, and the full path as evidence. The report opens with
 these summaries. Validate that it parses.
 
-Reply with only: per journey, reached or stuck and the number of findings, plus any
+Reply with only: per journey, reached or stuck and the number of findings; how many
+problems from earlier reviews are fixed and how many are still there; and any
 problems. Do not paste the findings.

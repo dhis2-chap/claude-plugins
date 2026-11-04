@@ -14,7 +14,11 @@ The sources live in `sources.md` next to this file. The reader journeys are the 
 stories in [dhis2-chap/user-stories](https://github.com/dhis2-chap/user-stories);
 the review also checks that those stories still make sense against the docs, and
 that they agree with the user stories open-climate-service keeps in its own
-documentation.
+documentation. The team's terminology and earlier documentation reviews come from
+the knowledge base [dhis2-chap/chap-first-brain](https://github.com/dhis2-chap/chap-first-brain),
+which replaced chap-infobase (see "Background" in `sources.md`). At the end, the
+review lists repos in the orgs that `sources.md` does not cover yet, so the list of
+sources keeps up with new repos.
 Scripts are in `scripts/`, the reviewer briefs and the findings format in
 `reference/`.
 
@@ -35,6 +39,8 @@ Decide once at the start which case you are in; do not try a tool you do not hav
 ## Requirements
 
 - `gh` authenticated with read access to the `dhis2` and `dhis2-chap` orgs.
+  chap-first-brain is private; without access to it the review runs without the
+  terminology check and the earlier reviews.
 - `python3`, and `uv` (for `pick.py` and `structure.py`, which need PyYAML).
 - A work directory: the agent's scratch or temp directory if it has one, else
   `mktemp -d`. Called `WORKDIR` below. `SKILL_DIR` is the directory of this file.
@@ -63,17 +69,24 @@ they chose to name repos, take the names as free text.
 cd WORKDIR
 cp SKILL_DIR/scripts/*.py .
 git -c credential.helper='!gh auth git-credential' clone -q --depth 1 https://github.com/dhis2-chap/user-stories.git stories
+git -c credential.helper='!gh auth git-credential' clone -q --depth 1 https://github.com/dhis2-chap/chap-first-brain.git brain
 uv run --with pyyaml python pick.py SKILL_DIR/sources.md --stories stories --teams modeling,climate [--groups ...] [--repos ...] --checks code,overlap,journey,structure
 python3 fetch.py
 uv run --with pyyaml python structure.py
+python3 coverage.py SKILL_DIR/sources.md
 ```
 
-Skip the user-stories clone and `--stories` when the journey check is not selected.
+Skip the user-stories clone and `--stories` when the journey check is not selected,
+and the chap-first-brain clone when neither overlap nor journey is. If the
+chap-first-brain clone fails, continue without it and say so in the reply. Its
+`Archive/` is in DVC and is not needed.
 `fetch.py` clones every selected repo shallow over HTTPS in parallel (seconds, not
 minutes) and lists the repos in each org. If a clone fails, report it and continue
 without that repo. Run `structure.py` even when the structure check is not selected:
 its output keeps the other reviewers from reporting broken links. Delete
 `findings_structure.json` before the report if structure was not selected.
+`coverage.py` lists the repos that are neither in Sources nor in Not reviewed,
+whatever teams were selected; it does not feed the reviewers.
 
 ## 2. Review
 
@@ -141,15 +154,28 @@ user; do not upload it anywhere unless they ask.
 
 Reply with: the link or path, the journey outcomes in one line each, counts per
 check and severity, the number of easy fixes, three to five notable findings in one
-line each, and what you verified. Do not paste the whole list. If the user wants
-issues or fixes from the report, that is a separate step they ask for.
+line each, how many problems from earlier reviews are fixed or still open, and what
+you verified. Do not paste the whole list. If the user wants issues or fixes from the
+report, that is a separate step they ask for.
+
+## 4. Coverage
+
+End the reply with the repos from `coverage.json` (the report also lists them under
+"Repos not in the review"). Look at the new ones (created in the last 90 days) and
+the ones with a docs folder or site config: read the README (`gh repo view <repo>`,
+they are not cloned) and propose for each, in one line: add to Sources (with the row: team, group, docs
+paths, nav), add to Not reviewed (with the reason), or decide later. Group the rest
+in one line. Also say if a candidate needs the skill itself to change, not just a
+row: a new team or group, a nav format `pick.py` and `structure.py` do not handle,
+or docs that are not Markdown. Change `sources.md` or the skill only if the user
+asks, as a separate step.
 
 ## Principles
 
 - Every finding has evidence a reader can open: a `file:line`, a URL or a quote.
 - Neutral wording about the docs, never about people. The report is shared.
 - Read-only: no edits, commits, issues or PRs during the review.
-- Keep `sources.md` the single place that says which repos are reviewed, and the
-  user-stories repo the single place for journeys. The review proposes story
-  changes in the report; if the user asks to add or drop a source or a journey
-  permanently, change the file there, as a separate step.
+- Keep `sources.md` the single place that says which repos are reviewed and which
+  are left out on purpose, and the user-stories repo the single place for journeys.
+  The review proposes story and source changes; if the user asks to add or drop a
+  source or a journey permanently, change the file there, as a separate step.

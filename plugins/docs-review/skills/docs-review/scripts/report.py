@@ -7,6 +7,7 @@ become links to the default branch on GitHub.
 import glob
 import html
 import json
+import os
 import re
 from collections import Counter, defaultdict
 from datetime import date
@@ -167,6 +168,30 @@ for c in CHECKS:
     empty = '<p class="muted empty">Nothing found.</p>' if not n else ""
     sections.append(f'<section id="{c}"><h2>{esc(CHECKS[c])} <span class="count">{n}</span></h2>{empty}{"".join(body)}</section>')
 
+
+def coverage_row(c):
+    new = '<span class="tag">new</span>' if c["new"] else ""
+    docs = esc(", ".join(c["docs"])) or ("README" if c["readme"] else '<span class="muted">none</span>')
+    # private repos are listed by name only: the report may be shared outside the team
+    about = esc(c["description"]) if c["visibility"] == "public" else '<span class="muted">private</span>'
+    return (f'<tr><td><a href="https://github.com/{esc(c["repo"])}">{esc(c["repo"])}</a>{new}</td>'
+            f'<td>{esc(c["created"])}</td><td>{esc(c["pushed"])}</td><td class="paths">{docs}</td><td>{about}</td></tr>')
+
+
+coverage_html = ""
+if os.path.exists("coverage.json"):  # written by coverage.py
+    cov = json.load(open("coverage.json"))
+    rows = "".join(coverage_row(c) for c in cov["candidates"])
+    table = ('<div class="table-wrap"><table><thead><tr><th>Repo</th><th>Created</th><th>Last push</th>'
+             f'<th>Docs</th><th>Description</th></tr></thead><tbody>{rows}</tbody></table></div>'
+             if rows else '<p class="muted empty">None: every repo is covered.</p>')
+    coverage_html = f"""<section id="coverage" class="top">
+    <h2>Repos not in the review <span class="count">{len(cov['candidates'])}</span></h2>
+    <p class="lede">Repos in dhis2-chap, and climate-related repos in dhis2, that the skill's list of sources neither reviews nor leaves out on purpose. New means created in the last {cov['new_days']} days. Each needs a decision: review it, or record why not.</p>
+    {table}
+  </section>"""
+
+
 source_opts = "".join(f'<option value="{esc(s["name"])}">{esc(s["name"])}</option>'
                       for s in cfg["sources"] if any(f.get("source") == s["name"] for f in findings))
 groups_txt = ", ".join(cfg["groups"])
@@ -298,6 +323,7 @@ td.total {{ font-weight: 500; }}
     <label>Source <select id="f-source"><option value="">All</option>{source_opts}</select></label>
   </div>
   {"".join(sections)}
+  {coverage_html}
 </main>
 <script>
 const boxes = [...document.querySelectorAll('.filters input[type=checkbox]')];

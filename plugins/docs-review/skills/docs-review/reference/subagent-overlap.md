@@ -44,6 +44,15 @@ Today is {today}.
    Same-topic pages for different audiences (a tutorial and a reference) are not a
    problem unless they contradict.
 
+4. **Terminology.** If `{workdir}/brain/Vault-overviews/terminology.md` exists (from
+   chap-first-brain, the team's knowledge base), read it and check the pages of your
+   sources against it: a name written in a form it calls outdated (such as "CHAP"),
+   or a term used in a sense it does not list or mixing two senses it keeps apart
+   (such as "template" or "model"). Skip entries marked **To confirm**. Report each
+   term once, with every page in `where` and the terminology entry quoted in
+   `evidence` (rule `terminology`; Low, or Medium when the mix-up can lead the reader
+   to the wrong thing). Without the file, skip this step.
+
 Report disagreements between pages (within one source or across sources). Leave
 "one page is wrong about the code" to the source reviewers, who check docs against
 code; if both pages are wrong, or only the code settles it, report it once as a
@@ -55,5 +64,5 @@ Write `{workdir}/findings_overlap_<team>.json` (findings format, `check: "overla
 `where` listing every copy). Set `effort` and `confidence` on every finding as
 `findings.md` defines them. Validate that it parses.
 
-Reply with only: number of topics mapped, counts by rule and severity, and any
-problems. Do not paste the findings.
+Reply with only: number of topics mapped, counts by rule and severity, whether the
+terminology file was used, and any problems. Do not paste the findings.

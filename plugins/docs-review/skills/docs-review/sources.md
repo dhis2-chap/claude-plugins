@@ -1,8 +1,9 @@
 # Documentation sources
 
-The single list of what `docs-review` can check. `scripts/pick.py` parses the
-tables below, so keep the column order. To add a source, add a row; to drop one,
-delete it.
+The single list of what `docs-review` can check, and of the repos it leaves out on
+purpose. `scripts/pick.py` and `scripts/coverage.py` parse the tables below, so keep
+the column order. To add a source, add a row; to drop one, delete it or move it to
+"Not reviewed".
 
 Columns:
 
@@ -50,6 +51,37 @@ Columns:
 | dhis2/climate-tools | climate | climate-tools | docs, README.md | myst:docs/myst.yml | https://climate-tools.dhis2.org | data engineers and data scientists working with climate data for DHIS2 |
 | dhis2/climate-app | climate | climate-app | README.md | - | GitHub | DHIS2 users importing weather and climate data |
 | dhis2-chap/climate-sre | shared | sre | . | - | GitHub (internal) | the team: server provisioning and operations |
+
+## Not reviewed
+
+Repos in `dhis2-chap`, and climate-related repos in `dhis2`, that are left out on
+purpose. `coverage.py` lists every other repo there that is not in Sources, so new
+repos show up in the report. Archived repos and forks are skipped without a row.
+
+| repo | reason |
+|------|--------|
+| dhis2-chap/chap-first-brain | team knowledge base, not product docs; read as background (see below) |
+| dhis2-chap/chap-infobase | replaced by chap-first-brain |
+| dhis2-chap/user-stories | the reader journeys; reviewed by the stories reviewer |
+| dhis2-chap/claude-plugins | team tooling, including this skill |
+| dhis2-chap/.github | org profile |
+| dhis2-chap/demo-repository | GitHub demo repo |
+
+## Background
+
+[dhis2-chap/chap-first-brain](https://github.com/dhis2-chap/chap-first-brain) (private)
+is the team's knowledge base. It replaced chap-infobase; do not use chap-infobase.
+The review reads two things from it, and reviews neither:
+
+- `Vault-overviews/terminology.md`: the team's names for Chap and its parts and the
+  working definitions of terms such as "model" and "template". The overlap reviewers
+  check the docs against it. Entries marked **To confirm** are not yet agreed and are
+  not used.
+- `Human-AI-collaboration/Reports/`: earlier documentation reviews, the files whose
+  names contain `qcDoc`. The journey reviewers say whether the problems those
+  reports raised on their path are fixed.
+
+Without access to the repo, the review runs without both.
 
 ## Journeys
 
