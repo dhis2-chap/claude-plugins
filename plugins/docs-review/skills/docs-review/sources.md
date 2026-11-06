@@ -71,17 +71,23 @@ repos show up in the report. Archived repos and forks are skipped without a row.
 
 [dhis2-chap/chap-first-brain](https://github.com/dhis2-chap/chap-first-brain) (private)
 is the team's knowledge base. It replaced chap-infobase; do not use chap-infobase.
-The review reads two things from it, and reviews neither:
+The review reads three things from it, and reviews none of them as docs:
 
 - `Vault-overviews/terminology.md`: the team's names for Chap and its parts and the
   working definitions of terms such as "model" and "template". The overlap reviewers
   check the docs against it. Entries marked **To confirm** are not yet agreed and are
   not used.
+- `Human-input/principles.md`: what the team believes and has decided (for example
+  that countries evaluate their own models, or that baseline models need no
+  configuration), one entry each with a source and a status. The overlap reviewers
+  check the docs against it, and also say when an entry itself looks wrong next to
+  what the docs or code show. Entries with status `proposal` are not used; entries
+  marked `to confirm` give findings with confidence `likely`.
 - `Human-AI-collaboration/Reports/`: earlier documentation reviews, the files whose
   names contain `qcDoc`. The journey reviewers say whether the problems those
   reports raised on their path are fixed.
 
-Without access to the repo, the review runs without both.
+Without access to the repo, the review runs without all three.
 
 ## Journeys
 

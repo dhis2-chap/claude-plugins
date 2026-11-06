@@ -14,9 +14,12 @@ The sources live in `sources.md` next to this file. The reader journeys are the 
 stories in [dhis2-chap/user-stories](https://github.com/dhis2-chap/user-stories);
 the review also checks that those stories still make sense against the docs, and
 that they agree with the user stories open-climate-service keeps in its own
-documentation. The team's terminology and earlier documentation reviews come from
-the knowledge base [dhis2-chap/chap-first-brain](https://github.com/dhis2-chap/chap-first-brain),
-which replaced chap-infobase (see "Background" in `sources.md`). At the end, the
+documentation. The team's terminology, its principles (what the team believes and
+has decided) and earlier documentation reviews come from the knowledge base
+[dhis2-chap/chap-first-brain](https://github.com/dhis2-chap/chap-first-brain),
+which replaced chap-infobase (see "Background" in `sources.md`); the review reports
+docs that contradict a principle, and principles that look wrong next to the docs or
+code. At the end, the
 review lists repos in the orgs that `sources.md` does not cover yet, so the list of
 sources keeps up with new repos.
 Scripts are in `scripts/`, the reviewer briefs and the findings format in
@@ -40,7 +43,7 @@ Decide once at the start which case you are in; do not try a tool you do not hav
 
 - `gh` authenticated with read access to the `dhis2` and `dhis2-chap` orgs.
   chap-first-brain is private; without access to it the review runs without the
-  terminology check and the earlier reviews.
+  terminology and principles checks and the earlier reviews.
 - `python3`, and `uv` (for `pick.py` and `structure.py`, which need PyYAML).
 - A work directory: the agent's scratch or temp directory if it has one, else
   `mktemp -d`. Called `WORKDIR` below. `SKILL_DIR` is the directory of this file.
@@ -154,8 +157,10 @@ user; do not upload it anywhere unless they ask.
 
 Reply with: the link or path, the journey outcomes in one line each, counts per
 check and severity, the number of easy fixes, three to five notable findings in one
-line each, how many problems from earlier reviews are fixed or still open, and what
-you verified. Do not paste the whole list. If the user wants issues or fixes from the
+line each, every `principle-conflict` and `principle-doubt` finding in one line each
+(the team wants to hear about these even when they are Low), how many problems from
+earlier reviews are fixed or still open, and what you verified. Do not paste the
+whole list. If the user wants issues or fixes from the
 report, that is a separate step they ask for.
 
 ## 4. Coverage

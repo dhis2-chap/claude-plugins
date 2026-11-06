@@ -53,6 +53,25 @@ Today is {today}.
    `evidence` (rule `terminology`; Low, or Medium when the mix-up can lead the reader
    to the wrong thing). Without the file, skip this step.
 
+5. **Principles.** If `{workdir}/brain/Human-input/principles.md` exists (from
+   chap-first-brain: what the team believes and has decided, one numbered entry
+   each with a Source and a Status), read it and check it against the pages of your
+   sources, in both directions:
+   - **A page contradicts an entry** (rule `principle-conflict`): the page tells the
+     reader to do, or states as fact, something an entry rules out, for example
+     sending data out of the country, or a step where the HISP Centre approves what a
+     country runs. Medium; High when a reader following the page would act against
+     the entry. Quote the page and the entry in `evidence`.
+   - **An entry looks wrong** (rule `principle-doubt`): the docs or the code describe,
+     as current and deliberate, something an entry says we do not do (a documented
+     feature, a default, a documented process), or the entry's Source is a page that
+     no longer says it. Low. Quote both sides; the suggestion is to confirm or change
+     the entry, not the docs. This is the one place the review questions the team's
+     own material rather than the product docs.
+   Skip entries whose Status is `proposal`. For entries marked `to confirm`, report
+   as usual but set `confidence: likely` and name the status in `evidence`. Report
+   each entry once, with every page in `where`. Without the file, skip this step.
+
 Report disagreements between pages (within one source or across sources). Leave
 "one page is wrong about the code" to the source reviewers, who check docs against
 code; if both pages are wrong, or only the code settles it, report it once as a
@@ -65,4 +84,5 @@ Write `{workdir}/findings_overlap_<team>.json` (findings format, `check: "overla
 `findings.md` defines them. Validate that it parses.
 
 Reply with only: number of topics mapped, counts by rule and severity, whether the
-terminology file was used, and any problems. Do not paste the findings.
+terminology and principles files were used, and any problems. Do not paste the
+findings.
