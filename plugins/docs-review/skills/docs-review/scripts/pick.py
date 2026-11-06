@@ -5,7 +5,8 @@ Usage: python pick.py SOURCES_MD [--stories DIR] [--teams modeling,climate] [--g
 Teams default to both; shared sources are added whenever any team is picked.
 --groups and --repos narrow the selection further (a repo is kept if it matches either).
 --stories is a clone of dhis2-chap/user-stories; a story becomes a journey when the repo
-it starts in is selected. Needs PyYAML.
+it starts in is selected. Stories with status "planned", or with no starts_at page, are
+not journeys: nobody can walk them yet. Needs PyYAML.
 Prints the selected groups and repos.
 """
 import argparse
@@ -62,9 +63,12 @@ for r in table(text, "Sources"):
     })
 
 team_of = {s["name"]: s["team"] for s in sources}
-journeys = []
+journeys, skipped = [], []
 for path in sorted(glob.glob(os.path.join(a.stories, "*.yaml"))) if a.stories else []:
     for st in yaml.safe_load(open(path)) or []:
+        if st.get("status", "current") != "current" or not st.get("starts_at"):
+            skipped.append(st["id"])
+            continue
         first = st["starts_at"][0]["repo"].split("/")[1]
         if first in team_of:
             journeys.append({**st, "team": team_of[first]})
@@ -86,3 +90,5 @@ for g in cfg["groups"]:
     names = [s["name"] for s in sources if s["group"] == g]
     print(f"{g}: {', '.join(names)}")
 print(f"{len(sources)} repos, {len(journeys)} journeys, checks: {', '.join(checks)}")
+if skipped:
+    print(f"not journeys (planned or no starts_at): {', '.join(skipped)}")

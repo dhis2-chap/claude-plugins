@@ -77,7 +77,7 @@
       "name": "docs-review",
       "source": "./plugins/docs-review",
       "description": "Review documentation across the modeling platform and climate team repos for holes: docs vs code, overlap between sources, reader journeys, structure and links. Shareable report. Run /docs-review.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": {
         "name": "DHIS2 CHAP"
       }

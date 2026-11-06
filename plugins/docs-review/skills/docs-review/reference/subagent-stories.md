@@ -18,10 +18,14 @@ user-stories repo is a separate step the team decides on.
 
 - Work dir: `{workdir}`. The stories repo is cloned at `{workdir}/stories/`: a
   `README.md` with the format and a status section, and one YAML file per domain
-  (`modeling.yaml`, `climate-data.yaml`, `cross-domain.yaml`).
-- `config.json` has `journeys`: the stories whose starting repo is selected for
-  this run, numbered from 1 in list order, and `sources`: the selected repos with
-  their `docs` paths and `audience`.
+  (the README's file table lists them).
+- `config.json` has `journeys`: the `current` stories with a `starts_at` page whose
+  starting repo is selected for this run, numbered from 1 in list order, and
+  `sources`: the selected repos with their `docs` paths and `audience`. Stories
+  with `status: planned` or an empty `starts_at` are not journeys; they describe
+  where the team wants to get to, so do not report their missing pages as
+  problems. A story's `notes` field is the team's own context for it; read it
+  before judging the story.
 - Clones of the selected repos in `{workdir}/repos/<name>/`.
 - open-climate-service keeps its own user stories in its documentation, in
   `docs/project_description.md` (and a product description in `PRD.md`). The
