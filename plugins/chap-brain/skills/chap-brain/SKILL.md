@@ -12,21 +12,28 @@ lets a session in any other repo (chap-core, chap-frontend, chapkit, ...) read i
 ## Find the vault
 
 In Claude Code, the plugin's session-start hook prints a line `chap-brain: the Chap team
-vault is at <path>` and has already pulled it. Use that path.
+vault (origin/main, read-only copy) is at <path>`. That copy is a git worktree of the
+user's clone, kept at `origin/main` and updated at session start. Read from that path.
+The user's clone (also named in the line) is where people edit the vault; it may be on
+another branch or have unpushed changes, so don't read from it unless the user asks
+about their own unpushed work.
 
-Without that line (other agents, or the hook found nothing), look in this order:
-`$CHAP_BRAIN_DIR`, a `chap-first-brain` folder next to the current repo or a folder
-above it, then `~/chap-first-brain`. Run `git -C <vault> pull --ff-only` once if it was
-not pulled this session. If there is no clone, tell the user to clone
+Without that line (other agents, or the hook found nothing), look for the clone in this
+order: `$CHAP_BRAIN_DIR`, a `chap-first-brain` folder next to the current repo or a
+folder above it, then `~/chap-first-brain`. Run `git -C <clone> fetch origin main` and
+read files as of `origin/main` (`git -C <clone> show origin/main:<path>`, or `grep` the
+clone when `git -C <clone> status` shows it is clean and on `main`). Never pull, switch
+branches or stash in the clone. If there is no clone, tell the user to clone
 `dhis2-chap/chap-first-brain` next to their Chap repos, and carry on without it.
 
 If the current repo *is* the vault, stop: its own `AGENTS.md` applies instead.
 
 ## Read only
 
-Never create, edit, move or delete files in the vault, and never run git or DVC write
-commands there (commit, push, `dvc add`, `dvc push`). Pulling is the only exception.
-When something should be saved to the vault (a decision, a report, a new term, a
+Never create, edit, move or delete files in the vault or its copy, and never run git or
+DVC write commands there (commit, push, `dvc add`, `dvc push`). The copy is reset to
+`origin/main` at every session start, so edits there would be lost anyway. When
+something should be saved to the vault (a decision, a report, a new term, a
 suggestion), say so and suggest the user opens a session in the vault to do it, where
 its conventions and scripts apply.
 

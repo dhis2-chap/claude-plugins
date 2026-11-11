@@ -85,7 +85,7 @@
     {
       "name": "chap-brain",
       "source": "./plugins/chap-brain",
-      "description": "Use the Chap team vault (dhis2-chap/chap-first-brain) from any repo: terminology, principles, decisions, reports and meeting notes. Keeps a local clone up to date at session start, reads it but never writes to it, and flags wrong terms, conflicts with team principles and claims the vault contradicts. No version: installs track the latest commit.",
+      "description": "Use the Chap team vault (dhis2-chap/chap-first-brain) from any repo: terminology, principles, decisions, reports and meeting notes. Keeps a read-only copy of origin/main next to your clone up to date at session start, never touches your clone, and flags wrong terms, conflicts with team principles and claims the vault contradicts. No version: installs track the latest commit.",
       "author": {
         "name": "DHIS2 CHAP"
       }

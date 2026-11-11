@@ -1,7 +1,7 @@
 {
   "name": "chap-brain",
   "displayName": "Chap Brain",
-  "description": "Use the Chap team vault (dhis2-chap/chap-first-brain) from any repo: terminology, principles, decisions, reports and meeting notes. Keeps a local clone up to date at session start, reads it but never writes to it, and flags wrong terms, conflicts with team principles and claims the vault contradicts.",
+  "description": "Use the Chap team vault (dhis2-chap/chap-first-brain) from any repo: terminology, principles, decisions, reports and meeting notes. Keeps a read-only copy of origin/main next to your clone up to date at session start, never touches your clone, and flags wrong terms, conflicts with team principles and claims the vault contradicts.",
   "author": {
     "name": "DHIS2 CHAP",
     "email": "chap@dhis2.org",
