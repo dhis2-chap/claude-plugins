@@ -43,9 +43,14 @@ esac
 notes=""
 
 # Pull at most every 10 minutes, so starting many sessions does not hit GitHub each time.
+# Give up after 30 seconds so a hanging network does not hold up the session.
 fetch_head="$vault/.git/FETCH_HEAD"
 if [ -z "$(find "$fetch_head" -mmin -10 2>/dev/null)" ]; then
-  if ! out=$(GIT_TERMINAL_PROMPT=0 git -C "$vault" pull --ff-only --quiet 2>&1); then
+  timeout_cmd=""
+  command -v timeout >/dev/null 2>&1 && timeout_cmd="timeout 30"
+  command -v gtimeout >/dev/null 2>&1 && [ -z "$timeout_cmd" ] && timeout_cmd="gtimeout 30"
+  if ! out=$(GIT_TERMINAL_PROMPT=0 $timeout_cmd git -C "$vault" pull --ff-only --quiet 2>&1); then
+    [ -z "$out" ] && out="no answer from the remote within 30 seconds"
     notes="$notes git pull failed (${out##*$'\n'}), so the vault may be out of date."
   fi
 fi
