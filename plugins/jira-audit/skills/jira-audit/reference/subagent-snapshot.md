@@ -56,3 +56,18 @@ compact view with `fields: ["summary","status","issuetype","created"]`, `maxResu
 | `jira_other_summaries.jsonl` | `project = {project} AND component not in ({components}) ORDER BY key ASC`, plus `project = {project} AND component is EMPTY AND statusCategory = Done ORDER BY key ASC` |
 
 Keys: `key, summary, status, type, created, group` ("other_component" or "no_component_done").
+
+Roadmap ideas slice (for the R2-R4 checks in `roadmap.py`), same subagent as
+`nocomp_open`, `view: "full"`, `maxResults: 100`, with
+`fields: ["summary","status","updated","labels","issuelinks","description","customfield_10216","customfield_10566"]`:
+
+| file | JQL |
+|---|---|
+| `roadmap_ideas.jsonl` | `{roadmap_idea_jql}` from config |
+
+Keys: `key, summary, status, updated, product_areas` (list of the
+`customfield_10216` option values), `links` (list of `{type, direction, key,
+status, issuetype, summary}` for every issue link, with the linked issue's type
+name and summary), `desc` (first 600 characters, tags stripped), `desc_len`.
+Ideas from other DHIS2 teams are not fetched; the JQL selects by Product Areas
+and Domain.

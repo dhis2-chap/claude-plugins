@@ -1,8 +1,8 @@
 {
   "name": "jira-audit",
   "displayName": "Jira Audit",
-  "version": "0.2.1",
-  "description": "Audit CLIM Jira issues against what has actually landed in the chap repos: wrong statuses, outdated descriptions, duplicates, missing components and epics missing from the team roadmap. Produces a shareable report with tiered proposed changes, and applies the ones you approve.",
+  "version": "0.3.0",
+  "description": "Audit CLIM Jira issues against what has actually landed in the chap repos: wrong statuses, outdated descriptions, duplicates, missing components, epics missing from the team roadmap page or from a ROADMAP idea, and roadmap ideas with no epic or the wrong link type. Produces a shareable report with tiered proposed changes, and applies the ones you approve.",
   "author": {
     "name": "DHIS2 CHAP",
     "email": "chap@dhis2.org",

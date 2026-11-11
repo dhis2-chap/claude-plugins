@@ -15,6 +15,7 @@ user has not named, and never widen "apply tier 1" to tier 2 items.
 | `link_duplicate:KEY` | Same, type `Duplicate`. Does not change status. |
 | `close_duplicate:KEY (keep OTHER)` | Link as Duplicate, then transition the named issue to Done. |
 | `relink_epic:KEY` | `editJiraIssue` with `parent: {"key": KEY}`. |
+| `link_implements:KEY` | Link a CLIM epic to the ROADMAP idea it delivers with `createIssueLink`, type `Polaris work item link` (`roadmap_delivery_link` in config). The epic is always the outward side ("epic implements idea") and the idea the inward side, whether the finding sits on the epic (R2: KEY is the idea) or on the idea (R3, R4: KEY is the epic). Leave any existing `Relates` link in place; never delete links. The comment goes on the epic. |
 | `edit_description` | Tier 3 only. Apply the `proposed_text` as a minimal edit to the existing description (read it first with `responseContentFormat: adf`, change only the sentence named in the ADF JSON, write back with `contentFormat: adf`; see Text format below). Never replace a whole description. |
 
 3. After each change add a comment with `addOrEditJiraIssueComment` (plain text, see Text format below), one or two lines:

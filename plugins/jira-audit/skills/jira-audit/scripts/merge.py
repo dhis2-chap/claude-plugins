@@ -9,6 +9,8 @@ import json
 from collections import Counter
 
 mech = json.load(open("findings_mechanical.json"))
+if glob.glob("findings_roadmap.json"):
+    mech += json.load(open("findings_roadmap.json"))
 sub, clean, reviewed = [], set(), set()
 for f in sorted(glob.glob("findings_batch_*.json")):
     sub += json.load(open(f))
@@ -19,7 +21,7 @@ for f in glob.glob("batch_*.json"):
     reviewed |= set(b["issues"]) | set(b["epics"])
 dups = json.load(open("findings_dups.json")) if glob.glob("findings_dups.json") else []
 
-KEEP_ALWAYS = {"E4", "C1", "S4", "E2", "R1"}
+KEEP_ALWAYS = {"E4", "C1", "S4", "E2", "R1", "R2", "R3", "R4"}
 kept = [m for m in mech if m["rule"][0] == "H" or m["rule"] in KEEP_ALWAYS or m["confidence"] == "Note" or m["key"] not in reviewed]
 dropped = len(mech) - len(kept)
 

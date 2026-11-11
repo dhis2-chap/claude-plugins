@@ -16,6 +16,11 @@ from datetime import datetime
 cfg = json.load(open("config.json"))
 m = json.load(open("merged.json"))
 issues = json.load(open("jira.json"))
+ideas = {}
+if os.path.exists("roadmap_ideas.jsonl"):
+    for line in open("roadmap_ideas.jsonl"):
+        d = json.loads(line)
+        ideas[d["key"]] = d
 JIRA = cfg["jira_url"].rstrip("/") + "/browse/"
 DONE = set(cfg["done_statuses"])
 SPRINT = cfg["scope"] == "sprint"
@@ -26,20 +31,21 @@ RULES = {
     "S4": "Done, but referenced PRs never merged", "S5": "Not started, but has a PR", "S6": "Delivered by a PR that never cited the key",
     "E1": "Epic open, all children done", "E2": "Epic done, children open", "E3": "Epic text no longer matches children", "E4": "Epic with no children",
     "D1": "Description outdated or wrong", "D2": "Description empty or too thin", "D3": "Description superseded",
-    "U1": "Duplicate", "U2": "Overlap or unlinked follow-up", "C1": "No component", "R1": "Epic not on the roadmap",
+    "U1": "Duplicate", "U2": "Overlap or unlinked follow-up", "C1": "No component",
+    "R1": "Epic not on the roadmap page", "R2": "Epic not linked from a roadmap idea", "R3": "Roadmap idea without an epic", "R4": "Idea linked to its epic without the delivery link",
     "H1": "Assignee differs from PR author", "H2": "Active but unassigned", "H3": "Open, only in closed sprints", "H4": "No epic",
 }
 CONF_ORDER = {"High": 0, "Medium": 1, "Low": 2, "Note": 3}
 TIER_TXT = {
     1: "Apply on one approval: reversible in one click, hard evidence, no one loses work. Each change gets a Jira comment naming the PR or this audit.",
-    2: "One glance each: transitions without a PR to point at, duplicate closes, component by keyword only.",
+    2: "One glance each: transitions without a PR to point at, duplicate closes, component by keyword only, epic-to-idea links suggested by text similarity.",
     3: "For the ticket owner: description edits. The proposed text is in the Descriptions section.",
 }
 
 if SPRINT:
     in_sprint = {k for k, d in issues.items() if any(s["name"] in cfg["sprints"] for s in d["sprints"])}
     for part in ("sub", "dups", "mech"):
-        m[part] = [f for f in m[part] if f["key"] in in_sprint or f["rule"] == "R1"]
+        m[part] = [f for f in m[part] if f["key"] in in_sprint or f["rule"].startswith("R")]
     m["reviewed"] = [k for k in m["reviewed"] if k in in_sprint]
     m["clean"] = [k for k in m["clean"] if k in in_sprint]
 
@@ -59,13 +65,17 @@ def linkify(s):
     return re.sub(rf"\b({cfg['project']}-\d+)\b", lambda mo: f'<a href="{JIRA}{mo.group(1)}" target="_blank" rel="noopener">{mo.group(1)}</a>', s)
 
 
+def lookup(k):
+    return issues.get(k) or ideas.get(k) or {}
+
+
 def key_cell(k):
-    return f'<a class="key" href="{JIRA}{k}" target="_blank" rel="noopener">{k}</a><div class="sum">{esc(issues.get(k, {}).get("summary", ""))}</div>'
+    return f'<a class="key" href="{JIRA}{k}" target="_blank" rel="noopener">{k}</a><div class="sum">{esc(lookup(k).get("summary", ""))}</div>'
 
 
 def status_pill(k):
-    st = issues.get(k, {}).get("status", "?")
-    cls = "done" if st in DONE else ("prog" if st in ("In Progress", "In Review") else "todo")
+    st = lookup(k).get("status", "?")
+    cls = "done" if st in DONE else ("prog" if st in ("In Progress", "In Review") or st in cfg.get("roadmap_delivery_statuses", []) else "todo")
     return f'<span class="pill {cls}">{esc(st)}</span>'
 
 
@@ -87,6 +97,10 @@ def tier(f):
         return 1
     if r == "U2" and a.startswith("link_relates"):
         return 1
+    if r == "R4" and a.startswith("link_implements"):
+        return 1
+    if r in ("R2", "R3") and a.startswith("link_implements"):
+        return 2
     if r == "C1" and "parent epic" in f["evidence"][0]:
         return 1
     if a.startswith(("transition", "close_duplicate", "link_duplicate")) or r == "C1":
@@ -123,7 +137,7 @@ def rows(findings, cols):
         ev = "".join(f"<li>{linkify(e)}</li>" for e in f.get("evidence", []))
         note = f'<p class="note">{linkify(f["note"])}</p>' if f.get("note") else ""
         prop = f'<p class="prop"><b>Proposed text:</b> {linkify(f["proposed_text"])}</p>' if f.get("proposed_text") else ""
-        other = f'<td>{key_cell(f["other"])}{status_pill(f["other"])}</td>' if "other" in cols else ""
+        other = (f'<td>{key_cell(f["other"])}{status_pill(f["other"])}</td>' if f.get("other") else '<td class="muted">none</td>') if "other" in cols else ""
         idc = f'<td class="pid">{f["_id"]}</td>' if "id" in cols else ""
         new = ' <span class="new">new</span>' if f["_new"] else ""
         out.append(f'<tr>{idc}<td>{key_cell(f["key"])}{status_pill(f["key"])}</td>{other}'
@@ -144,8 +158,8 @@ status_f = [f for f in sub if f["rule"][0] == "S"] + [f for f in mech if f["rule
 epic_f = [f for f in sub if f["rule"] == "E3"] + [f for f in mech if f["rule"] in ("E1", "E2") and f["confidence"] != "Note"]
 desc_f = [f for f in sub if f["rule"][0] == "D"]
 comp_f = [f for f in mech if f["rule"] == "C1"]
-roadmap_f = [f for f in mech if f["rule"] == "R1"]
-hyg = [f for f in mech if f["rule"][0] == "H" or f["rule"] == "E4" or (f["rule"] == "E1" and f["confidence"] == "Note")]
+roadmap_f = [f for f in mech if f["rule"][0] == "R" and f["confidence"] != "Note"]
+hyg = [f for f in mech if f["rule"][0] == "H" or f["rule"] == "E4" or (f["rule"] in ("E1", "R2") and f["confidence"] == "Note")]
 by_conf = Counter(f["confidence"] for f in sub + dups)
 by_cat = {"Status": len(status_f), "Epics": len(epic_f), "Descriptions": len(desc_f), "Duplicates": len(dups), "Component": len(comp_f), "Roadmap": len(roadmap_f)}
 proposed = [f for f in allf if f["_id"]]
@@ -163,7 +177,7 @@ hyg_by = defaultdict(list)
 for f in hyg:
     hyg_by[f["rule"]].append(f)
 hyg_html = ""
-for r in ("E4", "E1", "H2", "H1", "H3", "H4"):
+for r in ("E4", "E1", "R2", "H2", "H1", "H3", "H4"):
     fs = sorted(hyg_by.get(r, []), key=lambda f: int(f["key"].split("-")[1]))
     if fs:
         items = ", ".join(f'<a href="{JIRA}{f["key"]}" target="_blank" rel="noopener">{f["key"]}</a>' + (f' <span class="muted">({esc(f["title"])})</span>' if r in ("H1", "H3", "E1") else "") for f in fs)
@@ -242,9 +256,9 @@ p.lead{{max-width:72ch}} .method{{max-width:76ch}} .method li{{margin:4px 0}} :f
 <h2>Missing component<span class="cnt">{len(comp_f)}</span></h2>
 <p class="lead muted">Open issues with no component whose text or parent epic points at the audited area. They are invisible on component-filtered boards.</p>
 {table(comp_f)}
-<h2>Epics missing from the roadmap<span class="cnt">{len(roadmap_f)}</span></h2>
-<p class="lead muted">R1 open epics that no initiative on the <a href="{cfg["jira_url"].rstrip("/")}/wiki/spaces/Climate/pages/{cfg.get("roadmap_page_id", "")}" target="_blank" rel="noopener">roadmap page</a> lists. Add the epic key to the initiative it belongs to, or confirm it belongs to none. Listed for every open epic in the components, not only the sprints.</p>
-{table(roadmap_f)}
+<h2>Roadmap<span class="cnt">{len(roadmap_f)}</span></h2>
+<p class="lead muted">R1 open epics that no initiative on the <a href="{cfg["jira_url"].rstrip("/")}/wiki/spaces/Climate/pages/{cfg.get("roadmap_page_id", "")}" target="_blank" rel="noopener">roadmap page</a> lists. R2 open epics that no idea in the <a href="{cfg["jira_url"].rstrip("/")}/browse/{cfg.get("roadmap_project", "ROADMAP")}" target="_blank" rel="noopener">{cfg.get("roadmap_project", "ROADMAP")}</a> project links; the evidence names ideas with similar text. R3 ideas taken onto the roadmap with no epic delivering them (Medium), or earlier-stage ideas with a similar unlinked epic (Low). R4 ideas linked to their epic with "Relates" or another type instead of "{cfg.get("roadmap_delivery_link", "Polaris work item link")}", so the idea shows no delivery progress. Listed for every open epic and idea, not only the sprints. Epics without a similar idea are under Hygiene notes.</p>
+{table(roadmap_f, ("id", "key", "other", "finding", "action", "conf"))}
 <h2>Hygiene notes<span class="cnt">{len(hyg)}</span></h2>
 <p class="lead muted">Mechanical only, no judgement applied. Listed for completeness.</p>
 {hyg_html}
@@ -256,6 +270,7 @@ p.lead{{max-width:72ch}} .method{{max-width:76ch}} .method li{{margin:4px 0}} :f
 <li>Mechanical rules on the snapshot (status, epics, component, hygiene).</li>
 <li>Reviewer subagents, grouped by epic, read every in-scope open issue in full, checked its PRs, and searched unlinked PRs and master for work that never cited the key. Description claims were checked against the code on master.</li>
 <li>Duplicate candidates from text similarity across the whole project, then read in pairs.</li>
+<li>Open epics compared with the {cfg.get("roadmap_project", "ROADMAP")} ideas: existing links by type, and text similarity to suggest links where none exist. Links suggested by similarity are never tier 1.</li>
 <li>Mechanical hints a reviewer refuted were dropped. High-confidence transitions were re-checked against live Jira before publishing.</li>
 </ol>
 <p><b>Blind spots.</b> Work done without a PR (design, research, server config) can look undone; such signals stay Low. The keyword search for unlinked PRs can miss work described in other words. Done issues are only read when part of a duplicate pair. Jira moves during a run.</p></div>

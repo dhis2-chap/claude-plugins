@@ -1,6 +1,6 @@
 ---
 name: jira-audit
-description: "Use when the user wants to audit, clean up or sanity-check CLIM Jira against what has actually been done in the chap repos: wrong statuses (done but open, In Review without a PR, stale In Progress), outdated epic/issue descriptions, duplicates, missing components, open epics not linked from an initiative on the team roadmap page. Produces a shareable HTML report with tiered proposed changes and applies the ones the user approves. Triggers on \"audit jira\", \"go through jira\", \"check jira against PRs\", \"jira cleanup\", \"sprint audit\", \"apply tier 1\"."
+description: "Use when the user wants to audit, clean up or sanity-check CLIM Jira against what has actually been done in the chap repos: wrong statuses (done but open, In Review without a PR, stale In Progress), outdated epic/issue descriptions, duplicates, missing components, open epics not linked from an initiative on the team roadmap page or from a ROADMAP idea, roadmap ideas with no epic or with the wrong link type. Produces a shareable HTML report with tiered proposed changes and applies the ones the user approves. Triggers on \"audit jira\", \"go through jira\", \"check jira against PRs\", \"jira cleanup\", \"sprint audit\", \"link epics to roadmap ideas\", \"apply tier 1\"."
 metadata:
   internal: true
 ---
@@ -58,6 +58,11 @@ Write `WORKDIR/config.json`:
   "keywords": ["chap", "chap-core", "chapkit", "modeling app", "modelling app", "modeling platform", "backtest", "prediction", "evaluation", "model template", "marketplace", "benchmark"],
   "umbrella_labels": ["ch-initiative"],
   "roadmap_page_id": "2064220168",
+  "roadmap_project": "ROADMAP",
+  "roadmap_idea_jql": "project = ROADMAP AND (cf[10216] in (\"Chap\", \"Open Climate Service\") OR cf[10566] = \"Climate\") ORDER BY key ASC",
+  "roadmap_active_statuses": ["Proposed", "Analysing", "Roadmap Candidate", "Assigned to Roadmap"],
+  "roadmap_delivery_statuses": ["Assigned to Roadmap"],
+  "roadmap_delivery_link": "Polaris work item link",
   "gh_logins": {"ivar": ["ivargr"], "Knut Dagestad Rand": ["knutdrand"], "Edvin Aamot Stava": ["edvinstava"], "Morten Hansen": ["mortenoh"], "Boris Simovski": ["bsimovski"], "Eirik Haugstulen": ["eirikhaugstulen"], "Abyot Asalefew Gizaw": ["abyot"]}
 }
 ```
@@ -74,8 +79,9 @@ Launch, in one message:
 
 - **Jira subagents**, one per slice from `reference/subagent-snapshot.md`. Scope does
   not change the snapshot: always fetch open and done issues for every component
-  (done ones feed the duplicate and epic checks), the open no-component issues, and
-  the project-wide summaries. Typical: 4 subagents.
+  (done ones feed the duplicate and epic checks), the open no-component issues, the
+  project-wide summaries, and the Chap and Open Climate Service ideas in the ROADMAP
+  project (`roadmap_ideas.jsonl`, for the epic-to-idea checks). Typical: 4 subagents.
 - **PRs**, yourself in Bash, for every code and supporting repo:
   `gh pr list --repo ORG/REPO --state all --limit 3000 --json number,title,body,state,mergedAt,closedAt,createdAt,updatedAt,headRefName,author,url > WORKDIR/pr_REPO.json`
 - **Clones**, shallow, into `WORKDIR/repos/`:
@@ -84,10 +90,12 @@ Launch, in one message:
   main (no PRs), also `gh api repos/ORG/REPO/commits?per_page=100 --paginate` into
   `commits_REPO.jsonl` with `{sha, date, msg}` per line.
 
-- **Roadmap**, yourself: `getConfluenceContent` with `content_id` = `roadmap_page_id`,
+- **Roadmap page**, yourself: `getConfluenceContent` with `content_id` = `roadmap_page_id`,
   `detail: "full"`, `content_format: "markdown"`, and write the body to
   `WORKDIR/roadmap.md`. This is the team objectives page; every epic key on it counts
   as linked to an initiative. When the roadmap is revised, update `roadmap_page_id`.
+  The Jira side of the roadmap is the ROADMAP project of ideas, fetched by the
+  snapshot subagent above; CLIM has no Initiative issue type.
 
 When every subagent has reported, check line counts against
 `searchResultMode: "count"` for each slice. A mismatch means a page was lost: rerun that slice.
@@ -99,8 +107,13 @@ cd WORKDIR
 python3 link.py
 python3 checks.py
 uv run --with scikit-learn python dups.py
+uv run --with scikit-learn python roadmap.py
 python3 batches.py
 ```
+
+`roadmap.py` compares open epics with the ROADMAP ideas (rules R2-R4): existing
+links by type, and text similarity to suggest an epic for an idea or an idea for an
+epic. It skips itself with a message when `roadmap_ideas.jsonl` is missing.
 
 `batches.py` prints how many reviewer batches the scope produced. If it is more than
 8, tell the user and offer to narrow the scope rather than launching more.
@@ -125,7 +138,9 @@ python3 report.py --save
 Before publishing, re-check every tier-1 and High-confidence transition against live
 Jira with one JQL `key in (...)` and `fields: ["status"]`. Any issue whose status
 changed since the snapshot is dropped from the proposed changes (edit `merged.json`,
-rerun `report.py --save`). Spot-read two or three High findings' evidence yourself.
+rerun `report.py --save`). Spot-read two or three High findings' evidence yourself, and read the summaries of
+every R2/R3 pair that proposes a link: similarity finds the same words, not the same
+work, so drop a pair that only shares vocabulary (edit `merged.json`, rerun `report.py --save`).
 
 Publish `WORKDIR/report.html` as an artifact (load the `artifact-design` skill first,
 title `CLIM Sprint Audit` or `CLIM Jira Audit`, icon `clipboard`). The artifact starts
