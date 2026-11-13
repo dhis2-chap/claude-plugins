@@ -168,6 +168,24 @@ check; do not add the label on your own. To mark an issue:
 Open leadership questions:
 `labels = ch-leadership AND statusCategory != Done ORDER BY updated ASC`
 
+## Externally reported
+
+When an issue comes from someone outside the Chap team (a partner, a country
+or HISP group, an implementer, a user writing on the community forum or by
+email), add the Jira label `ch-externally-reported` (exact spelling), next to
+the other labels the repo requires. Add it to every issue that request leads
+to, for example both the backend and the frontend issue.
+
+- Credit the reporter at the start of the description, for example
+  "Requested by <name> on Slack: <their words>". Quoting their request is fine.
+- Ideas from members of the Chap team are not externally reported. Don't add
+  the label, and don't quote their chat messages in the description; describe
+  the need instead.
+- If it's unclear whether the person is outside the team, ask.
+
+Open externally reported issues:
+`labels = ch-externally-reported AND statusCategory != Done ORDER BY created DESC`
+
 ## Issue format
 
 No fixed structure. A few sentences on what and why, and a "Done when" or
