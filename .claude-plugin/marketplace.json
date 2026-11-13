@@ -68,7 +68,7 @@
       "name": "write-issue",
       "source": "./plugins/write-issue",
       "description": "Write or revise Jira epics and issues from discussion, not guesses. Asks before drafting, uses a fixed epic format, asks who to show the work to, and links new epics from the team roadmap. Also writes Chap and OCS ideas in the DHIS2 Roadmap (ROADMAP) project.",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": {
         "name": "DHIS2 CHAP"
       }
