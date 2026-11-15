@@ -54,25 +54,40 @@ three need a clear answer or an explicit "open".
 
 ## Epic format
 
-Use these sections, leaving out any that would be empty (shown here as
-headings for readability; write them in the format described under
-"Writing into Jira" below):
+The title (summary) should have a clear relationship to a user: who it is
+for or what changes for them. A product owner should be able to read the
+title alone and know what the epic is about, without opening it. Avoid
+titles that only make sense to the people who wrote them (internal names,
+component paths, implementation words). If the work is internal and has no
+direct user, say whose work it changes (for example "Faster CI for the
+model team") rather than hiding the audience.
+
+Use these sections, leaving out any that would be empty, and keep the order
+so a product owner reads the key information first — goal, then done-when,
+then the rest (shown here as headings for readability; write them in the
+format described under "Writing into Jira" below):
 
 ```
 ## Goal            (or ## Why, as bullets of problems)
+## Done when       a task list of checkable outcomes, not activities
 ## Background      context the reader needs; can be merged into Goal
 ## Scope           (or ## What) bullets of the work, with issue keys
 ## Out of scope
 ## Open questions
-## Done when       checkable outcomes, not activities
 ## Appendix        optional, see below
 ```
 
 The sections above the appendix should be precise and to the point, so a
-reader gets the goal, scope and done-when in a minute or two. Longer
-material that is useful to keep, such as pasted discussions, design notes,
-alternatives considered or data, goes in an `## Appendix` at the end and is
-referred to from the main text where relevant.
+reader gets the goal and done-when in a minute or two, with the rest for
+when they need it. Longer material that is useful to keep, such as pasted
+discussions, design notes, alternatives considered or data, goes in an
+`## Appendix` at the end and is referred to from the main text where
+relevant.
+
+Write "Done when" as a task list with checkable boxes (see "Writing into
+Jira" for how to send one to Jira), one box per outcome. Each box is an
+outcome someone can tick when it is true, not an activity ("Model X returns
+calibrated probabilities for the 2024 holdout", not "Calibrate model X").
 
 When the epic has a "Show to" answer, include it as a Done when item, for
 example "Shown to <who>, and their feedback recorded in this epic or a
@@ -113,10 +128,14 @@ of:
 
 - **ADF JSON** (`contentFormat: "adf"`): the default for epics and any
   description with sections, lists, links or code. Use heading, paragraph,
-  bulletList, orderedList, codeBlock and link nodes. When editing an existing
-  description, read it as ADF and write it back as ADF.
+  bulletList, orderedList, codeBlock and link nodes. For an epic's
+  "Done when", use a `taskList` with `taskItem` children (`state: "TODO"` by
+  default, `"DONE"` when the human says it is already true) so the boxes are
+  checkable in Jira. When editing an existing description, read it as ADF
+  and write it back as ADF.
 - **Jira wiki markup** (`h2. Goal`, `* item`, `*bold*`, `{{code}}`,
-  `[text|url]`): where the tool accepts it.
+  `[text|url]`): where the tool accepts it. Wiki markup has no checkable task
+  list, so write "Done when" as ADF instead.
 - **Plain text**: for short issues and comments; a bare URL is a link.
 
 Drafts shown to the human for approval may be previewed as readable text, but
