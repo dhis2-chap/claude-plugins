@@ -14,7 +14,7 @@ documentation sources. READ-ONLY: do not edit, commit, push, or create issues or
 
 - Work dir: `{workdir}`. `config.json` lists the selected sources. Yours are those of
   your team plus any `shared` ones. If the other team's sources are in `config.json`
-  too, also compare against them where a topic crosses over (e.g. OCS feeding climate
+  too, also compare against them where a topic crosses over (e.g. GeoService feeding climate
   data into Chap). Only use sources listed in `config.json`.
 - Clones in `{workdir}/repos/<name>/`, docs at each source's `docs` paths.
 - Findings format and severity: `{skill_dir}/reference/findings.md`. Read it first.

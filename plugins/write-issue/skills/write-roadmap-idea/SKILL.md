@@ -1,6 +1,6 @@
 ---
 name: write-roadmap-idea
-description: Write a roadmap idea for Chap or the Open Climate Service in the DHIS2 Roadmap (Jira Product Discovery project ROADMAP), or revise one. Use whenever asked to post, add, propose, suggest or write a roadmap idea, "put this on the roadmap", "make a ROADMAP idea for X" or "update ROADMAP-123". For CLIM epics and issues, use write-issue instead.
+description: Write a roadmap idea for Chap or the Open Geo Service in the DHIS2 Roadmap (Jira Product Discovery project ROADMAP), or revise one. Use whenever asked to post, add, propose, suggest or write a roadmap idea, "put this on the roadmap", "make a ROADMAP idea for X" or "update ROADMAP-123". For CLIM epics and issues, use write-issue instead.
 ---
 
 # Writing roadmap ideas
@@ -23,7 +23,7 @@ into Jira" in write-issue): send the description as ADF.
   Product Discovery project. Issue type: `Idea` (the only type).
 - Board: https://dhis2.atlassian.net/jira/polaris/projects/ROADMAP/ideas/view/ef470a7e-7499-48e1-8043-ca1e306e04f6
 - The project is shared by all DHIS2 product teams (Maps, Capture, Android
-  and others). Only create and edit Chap and Open Climate Service ideas.
+  and others). Only create and edit Chap and Open Geo Service ideas.
   Never change another team's idea.
 
 ## Before drafting
@@ -67,7 +67,7 @@ issue type id `10141`) if a create fails.
 
 | Field | Id | What to set |
 |---|---|---|
-| Product Areas | `customfield_10216` | `Chap`, `Open Climate Service`, or both. Always set. |
+| Product Areas | `customfield_10216` | `Chap`, `Open Geo Service`, or both. Always set. |
 | Domain | `customfield_10566` | `Climate`. Always set. |
 | App | `customfield_10218` | `Modelling App` or `Climate App` when the idea is about that app; otherwise leave empty. |
 | Origin | `customfield_10226` | Where the idea came from. The team mostly uses `Climate Domain`; others are `Community`, `HISP`, `Product`, `Technical`, `Implementation`. Ask if unclear. |

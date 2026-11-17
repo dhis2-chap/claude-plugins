@@ -59,7 +59,7 @@ Write `WORKDIR/config.json`:
   "umbrella_labels": ["ch-initiative"],
   "roadmap_page_id": "2064220168",
   "roadmap_project": "ROADMAP",
-  "roadmap_idea_jql": "project = ROADMAP AND (cf[10216] in (\"Chap\", \"Open Climate Service\") OR cf[10566] = \"Climate\") ORDER BY key ASC",
+  "roadmap_idea_jql": "project = ROADMAP AND (cf[10216] in (\"Chap\", \"Open Geo Service\") OR cf[10566] = \"Climate\") ORDER BY key ASC",
   "roadmap_active_statuses": ["Proposed", "Analysing", "Roadmap Candidate", "Assigned to Roadmap"],
   "roadmap_delivery_statuses": ["Assigned to Roadmap"],
   "roadmap_delivery_link": "Polaris work item link",
@@ -80,7 +80,7 @@ Launch, in one message:
 - **Jira subagents**, one per slice from `reference/subagent-snapshot.md`. Scope does
   not change the snapshot: always fetch open and done issues for every component
   (done ones feed the duplicate and epic checks), the open no-component issues, the
-  project-wide summaries, and the Chap and Open Climate Service ideas in the ROADMAP
+  project-wide summaries, and the Chap and Open Geo Service ideas in the ROADMAP
   project (`roadmap_ideas.jsonl`, for the epic-to-idea checks). Typical: 4 subagents.
 - **PRs**, yourself in Bash, for every code and supporting repo:
   `gh pr list --repo ORG/REPO --state all --limit 3000 --json number,title,body,state,mergedAt,closedAt,createdAt,updatedAt,headRefName,author,url > WORKDIR/pr_REPO.json`

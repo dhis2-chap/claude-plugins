@@ -80,21 +80,21 @@ The page shows only the diagram and a legend. The register, open questions and a
 %%{init: {"flowchart": {"htmlLabels": false, "wrappingWidth": 400, "useMaxWidth": false}, "markdownAutoWrap": false}}%%
 flowchart LR
   subgraph IN["Getting data in"]
-    OCS["`**Open climate service**
+    GEO["`**Open Geo Service**
 raw sources into DHIS2`"]
   end
   subgraph MOD["Modelling"]
     CORE["`**chap-core**
 runs models, evaluation, metrics`"]
   end
-  OCS -->|"climate data (API)"| CORE
-  CORE -.->|"results (tbc)"| OCS
+  GEO -->|"climate data (API)"| CORE
+  CORE -.->|"results (tbc)"| GEO
   classDef ours stroke:#1f7a6b,stroke-width:2px
   classDef external fill:#eceeed,stroke:#8a8f98
   classDef shared stroke:#c48a1a,stroke-width:2px
   classDef planned stroke-dasharray:5 5
   classDef gap fill:#fde3e3,stroke:#c00
-  class OCS,CORE ours
+  class GEO,CORE ours
 ```
 
 - every confirmed edge is solid and labelled with what flows and how, e.g. `-->|"predictions (REST API)"|`

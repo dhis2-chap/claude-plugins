@@ -27,11 +27,11 @@ user-stories repo is a separate step the team decides on.
   problems. A story's `notes` field is the team's own context for it; read it
   before judging the story.
 - Clones of the selected repos in `{workdir}/repos/<name>/`.
-- open-climate-service keeps its own user stories in its documentation, in
+- open-geo-service keeps its own user stories in its documentation, in
   `docs/project_description.md` (and a product description in `PRD.md`). The
   climate stories in the stories repo were copied from there, so the two drift
   apart unless someone compares them. That comparison is part of this job when
-  `open-climate-service` is in `config.json`; if it is not, skip it and say so.
+  `open-geo-service` is in `config.json`; if it is not, skip it and say so.
 - Findings format and severity: `{skill_dir}/reference/findings.md`. Read it first.
 
 Today is {today}.
@@ -60,13 +60,13 @@ the docs spend many pages on. Suggest each as one story in the repo's format: an
 `id`, a `reader`, a one-sentence `goal` and the `starts_at` page. Prefer a few
 stories the team would plausibly adopt over an exhaustive list.
 
-**open-climate-service stories against the repo.** Read the user stories in
+**open-geo-service stories against the repo.** Read the user stories in
 `docs/project_description.md` (and `PRD.md` if it adds any) and compare with
 `climate-data.yaml` and `cross-domain.yaml` in the stories repo:
 
-- a story in the OCS docs with no counterpart in the stories repo: `story-ocs-missing`;
-- a story in the stories repo that the OCS docs no longer have, or whose reader
-  or goal the OCS docs now state differently: `story-ocs-diverged`. Quote both
+- a story in the GeoService docs with no counterpart in the stories repo: `story-geoservice-missing`;
+- a story in the stories repo that the GeoService docs no longer have, or whose reader
+  or goal the GeoService docs now state differently: `story-geoservice-diverged`. Quote both
   sides and say which looks newer from the content.
 
 If the two sets agree, say so in your reply; that is a useful result and needs no
@@ -78,9 +78,9 @@ Impact on the review and on the team's picture of its readers, since no end user
 reads the stories repo:
 
 - **Medium**: a story that cannot be walked any more (a `starts_at` page gone, a
-  goal the product dropped), or an OCS story that contradicts the repo copy.
+  goal the product dropped), or a GeoService story that contradicts the repo copy.
 - **Low**: wording to update, a `done_when` to add, a missing story to consider,
-  an OCS story to copy over.
+  a GeoService story to copy over.
 
 Set `effort` and `confidence` as `findings.md` defines them. A proposed new story
 is `effort: small` only when the suggestion contains the full story.
@@ -90,10 +90,10 @@ is `effort: small` only when the suggestion contains the full story.
 Write `{workdir}/findings_stories.json` (findings format, `check: "journey"`, no
 `journey` number unless the finding is about one selected story, then its number).
 Use `rule` values `story-outdated`, `story-broken-start`, `story-missing`,
-`story-ocs-missing`, `story-ocs-diverged`. Set `source` to `user-stories`, or to
-`open-climate-service` when the fix belongs in the OCS docs. `where` entries such as
-`user-stories/climate-data.yaml:12` and `open-climate-service/docs/project_description.md:40`
+`story-geoservice-missing`, `story-geoservice-diverged`. Set `source` to `user-stories`, or to
+`open-geo-service` when the fix belongs in the GeoService docs. `where` entries such as
+`user-stories/climate-data.yaml:12` and `open-geo-service/docs/project_description.md:40`
 become links in the report. Validate that it parses.
 
-Reply with only: stories checked, counts by rule and severity, whether the OCS
+Reply with only: stories checked, counts by rule and severity, whether the GeoService
 stories agree with the repo, and any problems. Do not paste the findings.

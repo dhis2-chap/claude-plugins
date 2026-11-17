@@ -1,6 +1,6 @@
 """Pick sources from sources.md and write config.json.
 
-Usage: python pick.py SOURCES_MD [--stories DIR] [--teams modeling,climate] [--groups core,ocs]
+Usage: python pick.py SOURCES_MD [--stories DIR] [--teams modeling,climate] [--groups core,geoservice]
                         [--repos chap-core,climate-app] [--checks code,overlap,journey,structure]
 Teams default to both; shared sources are added whenever any team is picked.
 --groups and --repos narrow the selection further (a repo is kept if it matches either).
