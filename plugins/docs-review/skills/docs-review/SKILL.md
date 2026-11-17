@@ -1,6 +1,6 @@
 ---
 name: docs-review
-description: Use when the user wants a review of documentation across the chap modeling platform and climate team repos (chap-core, chap-site, chap-frontend, chapkit, SDKs, model examples, open-climate-service, climate-tools, climate-app, climate-sre) to find holes. Checks docs against code, overlap and contradictions between sources, reader journeys, and structure and links, and produces a shareable HTML report. Triggers on "review the docs", "docs review", "find holes in the documentation", "check our documentation", "are the docs up to date".
+description: Use when the user wants a review of documentation across the chap modeling platform and climate team repos (chap-core, chap-site, chap-frontend, chapkit, SDKs, model examples, open-geo-service, climate-tools, climate-app, climate-sre) to find holes. Checks docs against code, overlap and contradictions between sources, reader journeys, and structure and links, and produces a shareable HTML report. Triggers on "review the docs", "docs review", "find holes in the documentation", "check our documentation", "are the docs up to date".
 ---
 
 # Docs review
@@ -13,7 +13,7 @@ and no issues or PRs are created.
 The sources live in `sources.md` next to this file. The reader journeys are the user
 stories in [dhis2-chap/user-stories](https://github.com/dhis2-chap/user-stories);
 the review also checks that those stories still make sense against the docs, and
-that they agree with the user stories open-climate-service keeps in its own
+that they agree with the user stories open-geo-service keeps in its own
 documentation. The team's terminology, its principles (what the team believes and
 has decided) and earlier documentation reviews come from the knowledge base
 [dhis2-chap/chap-first-brain](https://github.com/dhis2-chap/chap-first-brain),
@@ -63,7 +63,7 @@ or one plain message:
 
 If the user chose to pick groups, ask once more with the groups of the selected
 teams as a multi-select (from `sources.md`: modeling has `core`, `chapkit`, `sdk`,
-`examples`; climate has `ocs`, `climate-tools`, `climate-app`; shared has `sre`). If
+`examples`; climate has `geoservice`, `climate-tools`, `climate-app`; shared has `sre`). If
 they chose to name repos, take the names as free text.
 
 ## 1. Select, fetch, mechanical checks
@@ -106,7 +106,7 @@ them to `WORKDIR`. The jobs are:
 - **Stories reviewer** (if `journey`): one job, from `reference/subagent-stories.md`.
   It checks the user-stories repo itself: stories that no longer fit the docs,
   readers and goals the docs serve but no story covers, and whether the stories
-  open-climate-service lists in `docs/project_description.md` still match the
+  open-geo-service lists in `docs/project_description.md` still match the
   repo's copy.
 
 Every job writes its own `findings_*.json` in the format in `reference/findings.md`,

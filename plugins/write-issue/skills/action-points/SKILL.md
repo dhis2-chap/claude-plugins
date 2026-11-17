@@ -54,7 +54,7 @@ The user's own words, lightly cleaned:
   "action point:", "TODO:", and speaker or owner labels ("Knut:") once the
   owner is recorded as assignee.
 - Do not rewrite, expand abbreviations, reword for clarity, or force a
-  verb at the start. "Security review for CAPS, OCS and Chap" stays as it
+  verb at the start. "Security review for CAPS, GeoService and Chap" stays as it
   is.
 - Write issue numbers bare (`CLIM-1234`) and add no Jira links unless
   asked.

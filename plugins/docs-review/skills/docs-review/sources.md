@@ -47,7 +47,7 @@ Columns:
 | dhis2-chap/Assessment_example_singlepred | modeling | examples | README.md | - | GitHub | model developers |
 | dhis2-chap/chap-workshop-python | modeling | examples | README.md | - | GitHub | workshop participants |
 | dhis2-chap/chap-workshop-r | modeling | examples | README.md | - | GitHub | workshop participants |
-| dhis2/open-climate-service | climate | ocs | docs, README.md | mkdocs:mkdocs.yml | https://dhis2.github.io/open-climate-service/ | OCS installers, operators and users |
+| dhis2/open-geo-service | climate | geoservice | docs, README.md | mkdocs:mkdocs.yml | https://dhis2.github.io/open-climate-service/ | GeoService installers, operators and users |
 | dhis2/climate-tools | climate | climate-tools | docs, README.md | myst:docs/myst.yml | https://climate-tools.dhis2.org | data engineers and data scientists working with climate data for DHIS2 |
 | dhis2/climate-app | climate | climate-app | README.md | - | GitHub | DHIS2 users importing weather and climate data |
 | dhis2-chap/climate-sre | shared | sre | . | - | GitHub (internal) | the team: server provisioning and operations |

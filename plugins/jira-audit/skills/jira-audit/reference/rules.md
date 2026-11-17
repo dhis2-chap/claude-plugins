@@ -69,7 +69,7 @@ reviewer to have read the PR against the issue text.
   (R1) and ideas in the Product Discovery project ROADMAP (R2-R4). The `ch-initiative` label marks
   umbrella epics, nothing more.
 - Only `Polaris work item link` (epic "implements" idea) counts as delivery on an idea. Of the
-  Chap and Open Climate Service ideas on 2026-11-11, 9 had it, 6 were linked with `Relates`
+  Chap and Open Geo Service ideas on 2026-11-11, 9 had it, 6 were linked with `Relates`
   only, and 28 had no CLIM link at all.
 - Epic-to-idea similarity uses character n-grams (3-5) on summary plus the first 300 characters
   of the description. On the 2026-11-11 data every already-linked pair scored 0.34 or more
