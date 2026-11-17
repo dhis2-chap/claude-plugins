@@ -1,6 +1,6 @@
 ---
 name: docs-review
-description: Use when the user wants a review of documentation across the chap modeling platform and climate team repos (chap-core, chap-site, chap-frontend, chapkit, SDKs, model examples, open-geo-service, climate-tools, climate-app, climate-sre) to find holes. Checks docs against code, overlap and contradictions between sources, reader journeys, and structure and links, and produces a shareable HTML report. Triggers on "review the docs", "docs review", "find holes in the documentation", "check our documentation", "are the docs up to date".
+description: Use when the user wants a review of documentation across the Climate team (Chap and GeoService groups) repos (chap-core, chap-site, chap-frontend, chapkit, SDKs, model examples, open-geo-service, climate-tools, climate-app, climate-sre) to find holes. Checks docs against code, overlap and contradictions between sources, reader journeys, and structure and links, and produces a shareable HTML report. Triggers on "review the docs", "docs review", "find holes in the documentation", "check our documentation", "are the docs up to date".
 ---
 
 # Docs review
