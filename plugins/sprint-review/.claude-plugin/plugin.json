@@ -2,7 +2,7 @@
   "name": "sprint-review",
   "displayName": "Sprint Review",
   "version": "0.1.0",
-  "description": "Produce the end-of-sprint review reports for the CLIM team, one for Chap and one for Data — what got done and how it serves the 6-month objectives, unplanned work, unfinished and languishing items, demo candidates, and improvement suggestions. Run Friday end of day for the Monday meeting. Requires the Atlassian MCP connector.",
+  "description": "Produce the end-of-sprint review reports for the CLIM team, one for Chap and one for GeoService — what got done and how it serves the 6-month objectives, unplanned work, unfinished and languishing items, demo candidates, and improvement suggestions. Run Friday end of day for the Monday meeting. Requires the Atlassian MCP connector.",
   "author": {
     "name": "DHIS2 CHAP",
     "email": "chap@dhis2.org",

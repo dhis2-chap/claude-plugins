@@ -1,27 +1,27 @@
 ---
 name: sprint-review
-description: Produce the end-of-sprint review reports for the CLIM team, one for Chap and one for Data — what got done and how it serves the 6-month objectives, unplanned work, unfinished and languishing items, demo candidates, and improvement suggestions. Use when asked for a "sprint review", "sprint report", "what did we get done this sprint", or the Friday report for the Monday meeting.
+description: Produce the end-of-sprint review reports for the CLIM team, one for Chap and one for GeoService — what got done and how it serves the 6-month objectives, unplanned work, unfinished and languishing items, demo candidates, and improvement suggestions. Use when asked for a "sprint review", "sprint report", "what did we get done this sprint", or the Friday report for the Monday meeting.
 ---
 
 # Sprint review report
 
 Run Friday end of day; the team goes through it in the Monday meeting. Sprints are 2 weeks. The report is a **draft for me** — never post it to Jira, Confluence or Slack without my OK.
 
-## 0. Two reports: Chap and Data
+## 0. Two reports: Chap and GeoService
 
 Produce **one report per group**, split by Jira component:
 
 | Report | Components |
 |---|---|
 | **Chap** | Modeling App, Modeling, ChapKit, Chap Modeling Platform |
-| **Data** | Geo Service (formerly Climate Service), Climate Tools, Climate App |
+| **GeoService** (formerly "Data") | Geo Service (formerly Climate Service), Climate Tools, Climate App |
 
 - **Geo Service** = Open Geo Service (formerly OCS / Open Climate Service; renamed Nov 2026). Its epics use the O2 label `ch-obj-open-geo-service`.
 - **Single-component report**: when I ask for a report for one component (e.g. "Geo Service"), produce only that report, scoped to that component, in `reports/sprint-review-<YYYY-MM-DD>-<component-slug>.md`. Same sections and rules.
 
 - If an issue has no component, use its epic's components.
 - An issue with components from both groups goes in **both** reports and is listed under "Cross-team".
-- **Ignore issues with the CAPS component for now**: leave them out of both reports entirely, including Cross-team. (Mentions of CAPS inside Chap or Data issues are fine.)
+- **Ignore issues with the CAPS component for now**: leave them out of both reports entirely, including Cross-team. (Mentions of CAPS inside Chap or GeoService issues are fine.)
 - Issues in neither group (e.g. Maps App, Other, or no component at all) go in neither report's numbers. Mention any that are languishing or blocking under "Cross-team".
 - An epic follows the same rule: components from both groups → it appears in both reports' epic checklist.
 - All sections cover that group only, except section 9 ("Cross-team"), which is the same in both reports: dependencies, shared items, overlaps, and work that falls between the groups.
@@ -29,10 +29,10 @@ Produce **one report per group**, split by Jira component:
 ## 1. Gather data
 
 - **Sprint**: the active sprint on CLIM board 686 (or the sprint I name). If the dashboard is running, `GET http://localhost:3001/api/sprint-data?sprintId=<id>` already returns completed / incomplete / added-mid-sprint keys (via the GreenHopper sprint report). Otherwise use the Jira MCP / REST API directly; see `server.js` for the API quirks.
-- **Per issue**: summary, type, status, assignee, epic (`customfield_10014` or `parent`), components (for the Chap / Data split), created date, and the **changelog** (status transitions and Sprint field changes) — needed for the languishing checks.
+- **Per issue**: summary, type, status, assignee, epic (`customfield_10014` or `parent`), components (for the Chap / GeoService split), created date, and the **changelog** (status transitions and Sprint field changes) — needed for the languishing checks.
 - **6-month objectives**: from the link in `CLAUDE.md`. If it's missing or stale, say so in the report and ask me; don't invent objectives.
 - Epics are the bridge from issues to objectives. Map issue → epic → objective; flag issues with no epic.
-- **Work outside the sprint**: JQL `project = CLIM AND issuetype != Epic AND status CHANGED DURING ("<sprint start>", "<sprint end>")`, from the exact sprint start time, minus every issue that was in the sprint at any point: all GreenHopper sets (including removed) and issues whose Sprint field lists this sprint. Don't use "issues fetched for the report" as the sprint list, since epic children get fetched too. For each: status changes inside the sprint window (changelog), epic, components (epic's if none). Apply the same Chap / Data / CAPS split.
+- **Work outside the sprint**: JQL `project = CLIM AND issuetype != Epic AND status CHANGED DURING ("<sprint start>", "<sprint end>")`, from the exact sprint start time, minus every issue that was in the sprint at any point: all GreenHopper sets (including removed) and issues whose Sprint field lists this sprint. Don't use "issues fetched for the report" as the sprint list, since epic children get fetched too. For each: status changes inside the sprint window (changelog), epic, components (epic's if none). Apply the same Chap / GeoService / CAPS split.
 - **Epics closed during the sprint**, whether or not they were in the sprint: JQL `project = CLIM AND issuetype = Epic AND status CHANGED TO (Done, Closed) DURING ("<previous sprint's complete time>", "<sprint end>")` (from the previous sprint's close, so epics closed between sprints aren't missed). For each, get the description (find its "Done when" section), components, when and to which status it was closed (changelog), current status (it may have been reopened), and its child issues with their statuses (`parent = <key>`).
 
 ## 2. Report sections
@@ -40,7 +40,7 @@ Produce **one report per group**, split by Jira component:
 1. **Headline** (3–5 bullets): the group's sprint in one glance. Include how many epics were closed and how many had a "Done when".
 2. **Epics in this sprint, by objective.** The report's main section: every epic with at least one item in the sprint, grouped under its **main objective**.
    - **Main objective**: the objective the objectives page lists the epic under (first one if several); otherwise its first `ch-obj-*` label that's on the page. Other objectives it serves go in the Epic cell as `<br>_also O5_`. Flag labels that aren't on the objectives page, and epics the page lists but that have no label.
-   - One `### O4 <name> (`ch-obj-model-quality`)` heading per objective, in order O1–O8, with a line `n epics · n items done`. Objectives with no epic get one line: "No epic in the sprint has this as its main objective." **Exception, Data / Geo Service reports:** show only objectives that have at least one epic in the sprint (most objectives are Chap-focused), with one line at the top of the section naming the objectives left out (e.g. "Not in this sprint: O1, O3–O6, O8"). Then `### No objective` (epics without one), then `### No epic`: a short summary of sprint items with no epic (done / open bullets), since they need an epic or a decision that they don't.
+   - One `### O4 <name> (`ch-obj-model-quality`)` heading per objective, in order O1–O8, with a line `n epics · n items done`. Objectives with no epic get one line: "No epic in the sprint has this as its main objective." **Exception, GeoService reports:** show only objectives that have at least one epic in the sprint (most objectives are Chap-focused), with one line at the top of the section naming the objectives left out (e.g. "Not in this sprint: O1, O3–O6, O8"). Then `### No objective` (epics without one), then `### No epic`: a short summary of sprint items with no epic (done / open bullets), since they need an epic or a decision that they don't.
    - Table columns: Epic | Time in progress | This sprint | What moved | Flags.
      - **Epic**: key link + title.
      - **Time in progress**: weeks since the epic first moved to In Progress / In Review (epic changelog). If it never did, use the first time one of its child issues started, and say so in the section intro. For a Done epic, count until it was done. Show one `■` per week (rounded to the nearest week, at least 1, at most 12, then `+`), each block wrapped in `<span style="color:…">` with a colour that gets more intense each week: `#fde2c4, #fcc896, #fbab68, #f88d3e, #f06e1e, #dc5414, #c03f0e, #a1300b`, then `#7f2408` from week 9 on. Follow the blocks with `n wk` (`<1 wk` under a week). Explain the bar in one line under the section heading, with a 1-week and a 9-week example.
@@ -70,7 +70,7 @@ Produce **one report per group**, split by Jira component:
 
 ## 3. Output
 
-- Write the two reports to `reports/sprint-review-<YYYY-MM-DD>-chap.md` and `reports/sprint-review-<YYYY-MM-DD>-data.md` (Friday's date), and give me a short summary of each in chat.
+- Write the two reports to `reports/sprint-review-<YYYY-MM-DD>-chap.md` and `reports/sprint-review-<YYYY-MM-DD>-geoservice.md` (Friday's date), and give me a short summary of each in chat.
 - Link Jira keys with a hover title giving the issue type and summary: `[CLIM-123](https://dhis2.atlassian.net/browse/CLIM-123 "Task: Add a model promotion checklist")`. Every link gets one, including short range links like `[1629]`. In the title, replace `"` with `'` and `|` with `/` so the link and tables don't break.
 - **People matters stay private**: report on work, not on individuals' performance. No personal details.
 - Keep it scannable — it's read aloud in a meeting. Tables for lists, bullets for the rest.
