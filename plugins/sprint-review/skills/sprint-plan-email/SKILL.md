@@ -34,26 +34,27 @@ Active sprint on CLIM board 686 (or the one I name): Jira MCP or REST (`/rest/ag
 Write to `reports/sprint-plan-email-<YYYY-MM-DD>.md` (date sent) and show it in chat:
 
 ```
-Subject: Climate & health team — sprint <dates>
+Subject: Climate team — sprint <dates>
 
 Hi <name>,
 
 What the team is working on this sprint (<dates>):
 
-**O1 · <short objective name>**
+**Objective 1 · <short objective name>**
 - <Plain-language summary> — <why it matters, a few words>.
 
-**O2 · <short objective name>**
+**Objective 2 · <short objective name>**
 - <Plain-language user story summary> — <why it matters>.
 - <Chap item> (Chap) — <why it matters>.
 
-**O5 · <short objective name>**
+**Objective 5 · <short objective name>**
 - <Plain-language summary> — <why it matters>.
 - Also: <small internal epics>.
 
 Jennifer
 ```
 
+- Headings spell out "Objective N" (e.g. "Objective 4 · …"); never "O4" anywhere in the email.
 - Each line: under ~20 words. Optional Jira link on the item (`[CLIM-123](https://dhis2.atlassian.net/browse/CLIM-123)`).
 - Within each objective, most visible / most important first.
 - **Before finalising, ask me whether to remove anything from the list.** Show the item titles and wait for my answer; then write the final file.
