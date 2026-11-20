@@ -14,10 +14,10 @@ Produce **one report per group**, split by Jira component:
 | Report | Components |
 |---|---|
 | **Chap** | Modeling App, Modeling, ChapKit, Chap Modeling Platform |
-| **GeoService** (formerly "Data") | Geo Service (formerly Climate Service), Climate Tools, Climate App |
+| **GeoService** (formerly "Data") | `Geo Service` (formerly Climate Service), Climate Tools, Climate App |
 
-- **Geo Service** = Open Geo Service (formerly OCS / Open Climate Service; renamed Nov 2026). Its epics use the O2 label `ch-obj-open-geo-service`.
-- **Single-component report**: when I ask for a report for one component (e.g. "Geo Service"), produce only that report, scoped to that component, in `reports/sprint-review-<YYYY-MM-DD>-<component-slug>.md`. Same sections and rules.
+- **GeoService** = Open GeoService (formerly OCS / Open Climate Service; renamed Nov 2026). Its epics use the O2 label `ch-obj-open-geo-service`.
+- **Single-component report**: when I ask for a report for one component (e.g. `Geo Service`), produce only that report, scoped to that component, in `reports/sprint-review-<YYYY-MM-DD>-<component-slug>.md`. Same sections and rules.
 
 - If an issue has no component, use its epic's components.
 - An issue with components from both groups goes in **both** reports and is listed under "Cross-team".

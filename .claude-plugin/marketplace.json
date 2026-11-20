@@ -94,7 +94,7 @@
     {
       "name": "sprint-plan",
       "source": "./plugins/sprint-plan",
-      "description": "Draft the start-of-sprint email to the head of the project: a very brief, non-technical summary of the CLIM team's sprint (Chap epics and Geo Service user stories), grouped by 6-month objective. Run after sprint planning. Requires the Atlassian MCP connector.",
+      "description": "Draft the start-of-sprint email to the head of the project: a very brief, plain-language summary of the CLIM team's sprint (Chap epics and GeoService user stories), grouped by 6-month objective. Run after sprint planning. Requires the Atlassian MCP connector.",
       "version": "0.1.0",
       "author": {
         "name": "DHIS2 CHAP"
