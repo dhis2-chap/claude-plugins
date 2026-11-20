@@ -81,6 +81,24 @@
       "author": {
         "name": "DHIS2 CHAP"
       }
+    },
+    {
+      "name": "sprint-review",
+      "source": "./plugins/sprint-review",
+      "description": "Produce the end-of-sprint review reports for the CLIM team, one for Chap and one for GeoService — what got done and how it serves the 6-month objectives, unplanned work, unfinished and languishing items, demo candidates, and improvement suggestions. Run Friday end of day for the Monday meeting. Requires the Atlassian MCP connector.",
+      "version": "0.1.0",
+      "author": {
+        "name": "DHIS2 CHAP"
+      }
+    },
+    {
+      "name": "sprint-plan",
+      "source": "./plugins/sprint-plan",
+      "description": "Draft the start-of-sprint email to the head of the project: a very brief, plain-language summary of the CLIM team's sprint (Chap epics and GeoService user stories), grouped by 6-month objective. Run after sprint planning. Requires the Atlassian MCP connector.",
+      "version": "0.1.0",
+      "author": {
+        "name": "DHIS2 CHAP"
+      }
     }
   ]
 }
