@@ -1,0 +1,15 @@
+{
+  "name": "sprint-plan",
+  "displayName": "Sprint Plan",
+  "version": "0.1.0",
+  "description": "Draft the start-of-sprint email to the head of the project: a very brief, non-technical summary of the CLIM team's sprint (Chap epics and Geo Service user stories), grouped by 6-month objective. Run after sprint planning. Requires the Atlassian MCP connector.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": ["jira", "sprint", "planning", "email", "chap", "clim"]
+}

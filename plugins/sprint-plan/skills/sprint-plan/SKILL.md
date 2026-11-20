@@ -1,5 +1,5 @@
 ---
-name: sprint-plan-email
+name: sprint-plan
 description: Draft the start-of-sprint email to the head of the project — a very brief, non-technical summary of what the CLIM team (Chap and Geo Service) is working on this sprint. Use when asked for the "sprint plan email", "email about the new sprint", or "what are we doing this sprint" for leadership.
 ---
 
