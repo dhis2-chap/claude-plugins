@@ -1,0 +1,15 @@
+{
+  "name": "epic-activity",
+  "displayName": "Epic Activity",
+  "version": "0.1.0",
+  "description": "Check whether a CLIM Jira epic is actually being worked on: timeline from merged/open PRs in the dhis2-chap repos and Jira changelogs, gaps between Jira status and reality, and a short verdict on recent activity. Requires the Atlassian MCP connector and the gh CLI.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": ["jira", "epic", "activity", "chap", "clim"]
+}

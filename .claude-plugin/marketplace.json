@@ -81,6 +81,15 @@
       "author": {
         "name": "DHIS2 CHAP"
       }
+    },
+    {
+      "name": "epic-activity",
+      "source": "./plugins/epic-activity",
+      "description": "Check whether a CLIM Jira epic is actually being worked on: timeline from PRs and Jira changelogs, Jira-vs-reality gaps, and a verdict on recent activity.",
+      "version": "0.1.0",
+      "author": {
+        "name": "DHIS2 CHAP"
+      }
     }
   ]
 }
