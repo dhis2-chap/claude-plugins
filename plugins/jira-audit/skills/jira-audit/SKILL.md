@@ -30,10 +30,15 @@ Ask in one `AskUserQuestion` call unless the user already said it:
 
 1. **Scope**: `sprint` (default) = the active sprint plus the most recently closed one,
    or `all` = every open issue in the components.
-2. **Components** (multi-select; default `Chap Modeling Platform`, `Modeling App`, `Modeling`).
+2. **Components** (multi-select; default `Chap Modeling Platform`, `Modeling App`, `Modeling`,
+   `ChapKit`).
    Offer the others from `listJiraProjectComponents` (via `discover` + `executeRead`).
-3. **Repos**: default code repos `chap-core, chap-frontend, chapkit, model-marketplace,
-   chap-checker`; supporting repos `chap-site, climate-sre`. Offer to add or drop.
+3. **Repos**: default code repos `chap-core, chap-frontend, chap-blocks, chapkit,
+   servicekit, chapkit-images, chap-marketplace, chap-devops, chap-checker`; supporting
+   repos `chap-site, climate-sre, chap_benchmarking`. Offer to add or drop. New repos
+   appear often, so first list the org's repos (`gh repo list dhis2-chap --limit 200
+   --json name,pushedAt`) and also offer any repo pushed to in the last 60 days that
+   is in neither list.
 
 Then resolve the rest without asking:
 
@@ -47,15 +52,15 @@ Write `WORKDIR/config.json`:
 ```json
 {
   "cloud_id": "...", "jira_url": "https://dhis2.atlassian.net", "project": "CLIM",
-  "components": ["Chap Modeling Platform", "Modeling App", "Modeling"],
+  "components": ["Chap Modeling Platform", "Modeling App", "Modeling", "ChapKit"],
   "scope": "sprint", "sprints": ["<active>", "<last closed>"],
   "org": "dhis2-chap",
-  "code_repos": ["chap-core", "chap-frontend", "chapkit", "model-marketplace", "chap-checker"],
-  "support_repos": ["chap-site", "climate-sre"],
+  "code_repos": ["chap-core", "chap-frontend", "chap-blocks", "chapkit", "servicekit", "chapkit-images", "chap-marketplace", "chap-devops", "chap-checker"],
+  "support_repos": ["chap-site", "climate-sre", "chap_benchmarking"],
   "snapshot": "<ISO timestamp>", "stale_days": 28,
   "done_statuses": ["Done", "Closed"],
   "todo_statuses": ["Backlog", "To Do", "Selected for Development"],
-  "keywords": ["chap", "chap-core", "chapkit", "modeling app", "modelling app", "modeling platform", "backtest", "prediction", "evaluation", "model template", "marketplace", "benchmark"],
+  "keywords": ["chap", "chap-core", "chapkit", "servicekit", "chap-devops", "chap-blocks", "modeling app", "modelling app", "modeling platform", "backtest", "prediction", "evaluation", "model template", "modeling package", "marketplace", "benchmark"],
   "umbrella_labels": ["ch-initiative"],
   "roadmap_page_id": "2064220168",
   "roadmap_project": "ROADMAP",
