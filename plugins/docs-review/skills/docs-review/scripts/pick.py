@@ -5,8 +5,10 @@ Usage: python pick.py SOURCES_MD [--stories DIR] [--teams modeling,climate] [--g
 Teams default to both; shared sources are added whenever any team is picked.
 --groups and --repos narrow the selection further (a repo is kept if it matches either).
 --stories is a clone of dhis2-chap/user-stories; a story becomes a journey when the repo
-it starts in is selected. Stories with status "planned", or with no starts_at page, are
-not journeys: nobody can walk them yet. Needs PyYAML.
+it starts in (org/name, as in Sources) is selected. Stories with status "planned", or with
+no starts_at page, are not journeys: nobody can walk them yet. YAML files that are not a
+list of stories (readers.yaml, terminology.yaml) are ignored. Current stories that start
+in a repo missing from Sources are printed as a warning. Needs PyYAML.
 Prints the selected groups and repos.
 """
 import argparse
@@ -62,16 +64,28 @@ for r in table(text, "Sources"):
         "published": r["published"], "audience": r["audience"],
     })
 
-team_of = {s["name"]: s["team"] for s in sources}
-journeys, skipped = [], []
+def is_story(entry):
+    return isinstance(entry, dict) and "id" in entry and "goal" in entry
+
+
+team_of = {s["repo"].lower(): s["team"] for s in sources}
+listed = {r["repo"].lower() for r in table(text, "Sources")}
+journeys, skipped, unlisted = [], [], []
 for path in sorted(glob.glob(os.path.join(a.stories, "*.yaml"))) if a.stories else []:
-    for st in yaml.safe_load(open(path)) or []:
+    data = yaml.safe_load(open(path))
+    # The stories repo also holds other YAML (readers.yaml, terminology.yaml): only
+    # files that are a list of stories count.
+    if not isinstance(data, list) or not data or not all(is_story(st) for st in data):
+        continue
+    for st in data:
         if st.get("status", "current") != "current" or not st.get("starts_at"):
             skipped.append(st["id"])
             continue
-        first = st["starts_at"][0]["repo"].split("/")[1]
+        first = st["starts_at"][0]["repo"].lower()
         if first in team_of:
             journeys.append({**st, "team": team_of[first]})
+        elif first not in listed:
+            unlisted.append(f"{st['id']} ({st['starts_at'][0]['repo']})")
 checks = [c for c in csv(a.checks) if c in ALL_CHECKS]
 bad = set(csv(a.checks)) - set(ALL_CHECKS)
 if bad:
@@ -92,3 +106,6 @@ for g in cfg["groups"]:
 print(f"{len(sources)} repos, {len(journeys)} journeys, checks: {', '.join(checks)}")
 if skipped:
     print(f"not journeys (planned or no starts_at): {', '.join(skipped)}")
+if unlisted:
+    print(f"WARNING: {len(unlisted)} current stories start in a repo that is not in Sources, "
+          f"so no run reviews them (a renamed repo, or a source to add): {', '.join(unlisted)}")

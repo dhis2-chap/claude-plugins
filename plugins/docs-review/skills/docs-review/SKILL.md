@@ -83,6 +83,10 @@ Skip the user-stories clone and `--stories` when the journey check is not select
 and the chap-first-brain clone when neither overlap nor journey is. If the
 chap-first-brain clone fails, continue without it and say so in the reply. Its
 `Archive/` is in DVC and is not needed.
+If `pick.py` warns that current stories start in a repo that is not in Sources, those
+readers are not reviewed in any run: say so in the reply, with the story ids, and in
+step 4 propose a fix (the story's `starts_at` repo is out of date, or the repo should
+be added to Sources).
 `fetch.py` clones every selected repo shallow over HTTPS in parallel (seconds, not
 minutes) and lists the repos in each org. If a clone fails, report it and continue
 without that repo. Run `structure.py` even when the structure check is not selected:
