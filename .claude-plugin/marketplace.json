@@ -99,6 +99,15 @@
       "author": {
         "name": "DHIS2 CHAP"
       }
+    },
+    {
+      "name": "slack-review",
+      "source": "./plugins/slack-review",
+      "description": "Review recent activity in the team's approved Slack channels: messages nobody answered, a TL;DR of each thread, and the actions people need to take. Needs the chap-first-brain MCP server.",
+      "version": "0.1.0",
+      "author": {
+        "name": "DHIS2 CHAP"
+      }
     }
   ]
 }

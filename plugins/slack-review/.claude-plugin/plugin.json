@@ -1,0 +1,20 @@
+{
+  "name": "slack-review",
+  "version": "0.1.0",
+  "description": "Review recent activity in the team's approved Slack channels: messages nobody answered, a TL;DR of each thread, and the actions people need to take. Reads Slack through the chap-first-brain MCP server's slack_* tools.",
+  "author": {
+    "name": "DHIS2 CHAP",
+    "email": "chap@dhis2.org",
+    "url": "https://github.com/dhis2-chap"
+  },
+  "homepage": "https://github.com/dhis2-chap/claude-plugins",
+  "repository": "https://github.com/dhis2-chap/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "slack",
+    "review",
+    "actions",
+    "catch-up",
+    "climate"
+  ]
+}
